@@ -1,4 +1,4 @@
-package stepik;
+package stepik.multithreading;
 
 import java.util.Random;
 import java.util.Scanner;

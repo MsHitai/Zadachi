@@ -1,4 +1,4 @@
-package stepik;
+package stepik.multithreading;
 
 public class BankMachine {
 
