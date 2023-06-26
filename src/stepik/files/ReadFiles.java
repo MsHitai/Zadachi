@@ -13,11 +13,18 @@ public class ReadFiles {
         }
 
         try (InputStream inputStream = new FileInputStream(file)) {
-            int a = inputStream.read();
-            while (a != -1) {
-                System.out.print((char) a);
-                a = inputStream.read();
+            long before = System.currentTimeMillis();
+            byte[] bytes = new byte[1000];
+            int countBytes = inputStream.read(bytes);
+            StringBuilder sb = new StringBuilder();
+            while (countBytes > 0) {
+                sb.append(new String(bytes, 0, countBytes));
+                countBytes = inputStream.read(bytes);
             }
+            System.out.println(sb);
+
+            long after = System.currentTimeMillis();
+            System.out.println(after - before);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
