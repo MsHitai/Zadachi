@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -16,14 +16,15 @@ public class CrptApi {
     private final Lock lock;
     private final AtomicInteger requestCount;
     private final int requestLimit;
-    private final long intervalInMillis;
     private final HttpClient httpClient;
 
-    public CrptApi(TimeUnit timeUnit, int requestLimit) {
+    private final Condition requestLimitCondition;
+
+    public CrptApi(int requestLimit, Condition requestLimitCondition) {
+        this.requestLimitCondition = requestLimitCondition;
         this.lock = new ReentrantLock();
         this.requestCount = new AtomicInteger(0);
         this.requestLimit = requestLimit;
-        this.intervalInMillis = timeUnit.toMillis(1) / requestLimit;
         this.httpClient = new HttpClient();
     }
 
@@ -31,7 +32,7 @@ public class CrptApi {
         try {
             lock.lock();
             while (requestCount.get() >= requestLimit) {
-                Thread.sleep(intervalInMillis);
+                requestLimitCondition.await();
             }
             sendDocumentToApi(document, signature);
             requestCount.incrementAndGet();
@@ -49,7 +50,7 @@ public class CrptApi {
             if (response.isSuccessful()) {
                 System.out.println("Document created successfully.");
             } else {
-                System.out.println("Failed to create document. API error: " + response.statusMessage);
+                System.out.println("Failed to create document. API error: " + response.getStatusMessage());
             }
         } catch (Exception e) {
             System.out.println("Failed to create document. Exception: " + e.getMessage());
@@ -115,6 +116,10 @@ public class CrptApi {
 
         public boolean isSuccessful() {
             return statusCode >= 200 && statusCode < 300;
+        }
+
+        public String getStatusMessage() {
+            return statusMessage;
         }
     }
 }
