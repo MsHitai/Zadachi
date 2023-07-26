@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Exam {
+public class MaxMedian {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
