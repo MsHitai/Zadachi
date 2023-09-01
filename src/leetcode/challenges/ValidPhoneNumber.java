@@ -7,7 +7,7 @@ import java.io.IOException;
 public class ValidPhoneNumber {
 
     public static void main(String[] args) {
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("D:\\Learning Java\\Zadachki\\src\\leetcode\\challenges\\file.txt"))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("D:\\Learning Java\\Zadachki\\src\\leetcode\\challenges\\file.txt"))) {
             while (bufferedReader.ready()) {
                 String line = bufferedReader.readLine();
                 String format1 = "[0-9]{3}-[0-9]{3}-[0-9]{4}$";

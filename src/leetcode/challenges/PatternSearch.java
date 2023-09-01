@@ -1,12 +1,13 @@
 package leetcode.challenges;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class PatternSearch {
 
     public static final String TEXT = "aaababaabaaaabaabaabaabaaababaabaaababaabaaaabaabaabaabbabaabaaababaababaabaabaabaaabbaab"; // 22
     public static final String PATTERN = "aab";
-
 
 
     public static void main(String[] args) {
@@ -36,7 +37,7 @@ public class PatternSearch {
 
         for (int i = 0; i < s.length() - 9; i++) {
             String dna = s.substring(i, i + 10);
-            freqs.put(dna, freqs.getOrDefault(dna, 0) +1);
+            freqs.put(dna, freqs.getOrDefault(dna, 0) + 1);
         }
 
         for (String substring : freqs.keySet()) {
@@ -52,13 +53,13 @@ public class PatternSearch {
         for (int i = 1; i < array.length; i++) {
             int current = array[i];
             int j = i - 1;
-            while(j >= 0 && current < array[j]) {
-                array[j+1] = array[j];
+            while (j >= 0 && current < array[j]) {
+                array[j + 1] = array[j];
                 j--;
             }
             // в этой точке мы вышли, так что j так же -1
             // или в первом элементе, где текущий >= a[j]
-            array[j+1] = current;
+            array[j + 1] = current;
         }
     }
 }

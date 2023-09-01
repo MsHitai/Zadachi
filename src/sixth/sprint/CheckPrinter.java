@@ -17,11 +17,11 @@ public class CheckPrinter {
     public static void printCheck(String[] items) {
         int max = 0;
 
-        for(String item: items) {
+        for (String item : items) {
             String[] words = item.split(", ");
             max = findMaxLength(words);
             String maxFormat = "%" + max + "s" + "  ";
-            for(String word : words) {
+            for (String word : words) {
 
                 System.out.printf(maxFormat, word);
             }
@@ -35,7 +35,7 @@ public class CheckPrinter {
         System.out.println("Введите количество записей:");
         int n = Integer.parseInt(scanner.nextLine());
         String[] values = new String[n];
-        for (int i=0; i<n; ++i)
+        for (int i = 0; i < n; ++i)
             values[i] = scanner.nextLine();
         printCheck(values);
     }

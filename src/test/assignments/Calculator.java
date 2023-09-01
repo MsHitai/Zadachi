@@ -15,7 +15,7 @@ public class Calculator {
         System.out.println("Выберите действие ");
         String operator = scan.nextLine();
 
-        switch(operator) {
+        switch (operator) {
             case "+":
                 int result = firstNum + secondNum;
                 System.out.println("Получилось " + result);

@@ -27,7 +27,7 @@ public class Merge_Two_Sorted_Lists {
         ListNode() {
         }
 
-        public void add (int val) {
+        public void add(int val) {
             ListNode prev = next;
             ListNode node = new ListNode(val, next);
             next = node;
@@ -50,22 +50,21 @@ public class Merge_Two_Sorted_Lists {
         }
     }
 
-    public static ListNode mergeTwoLists (ListNode list1, ListNode list2) {
+    public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode dummy = new ListNode(0, null);
         ListNode temp = dummy;
-        while (list1!=null && list2!=null) {
-            if (list1.val<list2.val) {
+        while (list1 != null && list2 != null) {
+            if (list1.val < list2.val) {
                 temp.next = list1;
                 list1 = list1.next;
                 temp = temp.next;
-            }
-            else {
+            } else {
                 temp.next = list2;
                 list2 = list2.next;
                 temp = temp.next;
             }
         }
-        if (list1==null) {
+        if (list1 == null) {
             temp.next = list2;
             return dummy.next;
         }

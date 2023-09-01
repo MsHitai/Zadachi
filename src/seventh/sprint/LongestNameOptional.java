@@ -8,7 +8,7 @@ public class LongestNameOptional {
 
     public static Optional<String> longestName(List<Optional<String>> maybeNames) {
         List<String> defaultLongest = new ArrayList<>();
-        for (Optional<String> name: maybeNames) {
+        for (Optional<String> name : maybeNames) {
             name.ifPresent(defaultLongest::add);
         }
 

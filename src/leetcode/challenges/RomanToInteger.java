@@ -15,7 +15,7 @@ public class RomanToInteger {
         System.out.println(romanToInt(s1));
         System.out.println(romanToInt(s2));
 
-        int[] nums = {9,7,1,15};
+        int[] nums = {9, 7, 1, 15};
         int target = 8;
         System.out.println(Arrays.toString(twoSum(nums, target)));
     }
@@ -39,7 +39,7 @@ public class RomanToInteger {
                 result += map.get(s.charAt(i));
             }
         }
-        
+
         return result;
     }
 
@@ -51,7 +51,7 @@ public class RomanToInteger {
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
             if (map.containsKey(complement) && map.get(complement) != i) {
-                return new int[] { i, map.get(complement) };
+                return new int[]{i, map.get(complement)};
             }
         }
         // In case there is no solution, we'll just return null

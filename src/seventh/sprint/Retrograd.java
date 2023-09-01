@@ -21,7 +21,7 @@ public class Retrograd {
         String formatFinish = taskFinish.format(formatter);
 
         // taskStart должен быть выведен в указанном формате
-        System.out.println("В прошлый раз задача была начата в " + formatStart + "," );
+        System.out.println("В прошлый раз задача была начата в " + formatStart + ",");
         // taskFinish должен быть выведен в указанном формате
         System.out.println("а закончена в " + formatFinish + ".");
 

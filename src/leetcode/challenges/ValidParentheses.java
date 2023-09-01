@@ -13,7 +13,7 @@ public class ValidParentheses {
         System.out.println(isValid(s2));
     }
 
-    public static boolean isValid (String s) {
+    public static boolean isValid(String s) {
 
         Stack<Character> stack = new Stack<>();
 

@@ -7,7 +7,7 @@ public class Practicum {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws TooMuchPizzaException, NotEnoughPizzaException{
+    public static void main(String[] args) throws TooMuchPizzaException, NotEnoughPizzaException {
         final PizzaStorage storage = new PizzaStorage(10);
         printActionMenu();
         String action = scanner.nextLine();

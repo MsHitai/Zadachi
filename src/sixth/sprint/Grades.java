@@ -4,19 +4,19 @@ public class Grades {
 
     public static void main(String[] args) {
         Grades grades = new Grades();
-        
+
         String journal = "вероника,чехова,ФИЗИКА,5;анна,строкова,МАТЕМАТИКА,4;иван,петров,ГЕОМЕТРИЯ,5";
-        
+
         grades.gradeBeautifier(journal);
 
-        String[] reversed = new String[] {"Вероника Чехова физика — Безупречно", "Анна Строкова математика — Потрясающе",
-        "Иван Петров геометрия — Безупречно"};
+        String[] reversed = new String[]{"Вероника Чехова физика — Безупречно", "Анна Строкова математика — Потрясающе",
+                "Иван Петров геометрия — Безупречно"};
 
         System.out.println(grades.serializeGrades(reversed));
     }
 
     private String capitalize(String str) {
-        return str.substring(0,1).toUpperCase() + str.substring(1);
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     private String gradeToString(String grade) {

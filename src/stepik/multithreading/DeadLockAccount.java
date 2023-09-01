@@ -13,7 +13,7 @@ public class DeadLockAccount {
         this.amount2 = amount2;
     }
 
-    public void transferFrom1To2 (int amount) {
+    public void transferFrom1To2(int amount) {
         synchronized (monitor1) {
             try {
                 Thread.sleep(2000);
@@ -37,7 +37,7 @@ public class DeadLockAccount {
         }
     }
 
-    public void transferFrom2To1 (int amount) {
+    public void transferFrom2To1(int amount) {
         synchronized (monitor2) {
             try {
                 Thread.sleep(2000);

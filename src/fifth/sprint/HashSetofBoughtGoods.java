@@ -1,8 +1,8 @@
 package fifth.sprint;
 
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 public class HashSetofBoughtGoods {
     private static List<String> allPurchases = List.of(
@@ -28,7 +28,7 @@ public class HashSetofBoughtGoods {
 
 
         // допишите вывод количества уникальных товаров
-        System.out.println( "За месяц было куплено " + uniquePurchases.size() + " уникальных товаров.");
+        System.out.println("За месяц было куплено " + uniquePurchases.size() + " уникальных товаров.");
     }
 
     // реализуйте этот метод

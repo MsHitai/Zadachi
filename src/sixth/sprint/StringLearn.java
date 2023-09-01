@@ -34,10 +34,11 @@ public class StringLearn {
 
     public static boolean endsWith(String initial, String other) {
         if (initial.contains(other)) {
-            return initial.charAt(initial.length()-1) == other.charAt(other.length()-1);
+            return initial.charAt(initial.length() - 1) == other.charAt(other.length() - 1);
         }
         return false;
     }
+
     private boolean isCapsLock = false;
 
     public void capsLock() {

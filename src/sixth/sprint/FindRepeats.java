@@ -13,11 +13,12 @@ public class FindRepeats {
 
         System.out.println(check.capitalize("я не волшебник, я только учусь!"));
     }
+
     int numberOfRepeats(String text, String substring) {
         int count = 0;
         StringBuilder builder = new StringBuilder(text);
-        while(builder.indexOf(substring) != -1) {
-            builder.delete(0, (builder.indexOf(substring)+ substring.length()));
+        while (builder.indexOf(substring) != -1) {
+            builder.delete(0, (builder.indexOf(substring) + substring.length()));
             count++;
         }
         return count;

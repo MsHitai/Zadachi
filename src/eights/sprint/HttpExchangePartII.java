@@ -1,14 +1,14 @@
 package eights.sprint;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public class HttpExchangePartII {
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class HttpExchangePartII {
             // проверяем, успешно ли обработан запрос
             if (response.statusCode() == 200) {
                 JsonElement jsonElement = JsonParser.parseString(response.body());
-                if(!jsonElement.isJsonObject()) { // проверяем, точно ли мы получили JSON-объект
+                if (!jsonElement.isJsonObject()) { // проверяем, точно ли мы получили JSON-объект
                     System.out.println("Ответ от сервера не соответствует ожидаемому.");
                     return;
                 }

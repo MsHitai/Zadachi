@@ -47,7 +47,8 @@ class Like {
     private String name;
     private String avatarUrl;
 
-    public Like() {}
+    public Like() {
+    }
 
     public Like(String name, String avatarUrl) {
         this.name = name;

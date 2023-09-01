@@ -24,19 +24,19 @@ public class Concurrency {
 
     }
 
-    private static void withoutConcurrency (float[] nums) {
+    private static void withoutConcurrency(float[] nums) {
         Arrays.fill(nums, 1f);
 
         long before = System.currentTimeMillis();
         for (int i = 0; i < nums.length; i++) {
             nums[i] = (float) (nums[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
         }
-        
+
         long after = System.currentTimeMillis();
         System.out.println(after - before);
     }
 
-    private static void withConcurrency (float[] nums) {
+    private static void withConcurrency(float[] nums) {
         Arrays.fill(nums, 1f);
         float[] firstHalf = new float[HALF];
         float[] secondHalf = new float[HALF];
@@ -46,19 +46,19 @@ public class Concurrency {
         System.arraycopy(nums, 0, firstHalf, 0, HALF);
         System.arraycopy(nums, HALF, secondHalf, 0, HALF);
 
-        Thread thread1 = new Thread( () -> {
+        Thread thread1 = new Thread(() -> {
             for (int i = 0; i < firstHalf.length; i++) {
                 float f = (float) i;
                 firstHalf[i] = (float) (firstHalf[i] * Math.sin(0.2f + f / 5) * Math.cos(0.2f + f / 5) * Math.cos(0.4f + f / 2));
             }
-        } );
+        });
 
-        Thread thread2 = new Thread( () -> {
+        Thread thread2 = new Thread(() -> {
             for (int i = 0; i < firstHalf.length; i++) {
                 float f = (float) i;
                 secondHalf[i] = (float) (secondHalf[i] * Math.sin(0.2f + f / 5) * Math.cos(0.2f + f / 5) * Math.cos(0.4f + f / 2));
             }
-        } );
+        });
 
         thread1.start();
         thread2.start();
@@ -81,7 +81,7 @@ public class Concurrency {
         Thread timer = new Thread(() -> {
             int seconds = 0;
             try {
-                while(true) {
+                while (true) {
                     System.out.println(seconds++);
                     Thread.sleep(1000);
                 }

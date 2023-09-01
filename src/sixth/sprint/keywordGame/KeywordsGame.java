@@ -15,12 +15,12 @@ public class KeywordsGame {
             "catch", "finally", "throw", "throws", "synchronized", "volatile",
             "native", "transient", "assert", "strictfp", "const", "goto"
     );
-    private static final List<String> RESERVED  = List.of("true", "false", "null", "var");
-    private static final List<String>  DESTRUCTORS = List.of(
+    private static final List<String> RESERVED = List.of("true", "false", "null", "var");
+    private static final List<String> DESTRUCTORS = List.of(
             "+", "Long", "instance", "export", "puper", "abstraction", "polymorphism", "begin", "end", "start",
             "-", "*", "=", "0", "1", "Throwable", "Integer", "dependencies", "transparent", "equals", "packageof",
             "strictaccess", "enumeration", "visible"
-            );
+    );
 
     private static final int MAX_INCORRECT_ATTEMPTS = 5;
 

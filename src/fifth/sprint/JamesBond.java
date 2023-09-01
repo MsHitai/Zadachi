@@ -1,6 +1,9 @@
 package fifth.sprint;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class JamesBond {
     public static void main(String[] args) {
@@ -11,7 +14,7 @@ public class JamesBond {
 
         Map<String, Integer> jamesBondActors = new LinkedHashMap<>();
         for (int i = 0; i < actorsList.size(); i++) {
-            jamesBondActors.put(actorsList.get(i), jamesBondActors.getOrDefault(actorsList.get(i), 0) +1);
+            jamesBondActors.put(actorsList.get(i), jamesBondActors.getOrDefault(actorsList.get(i), 0) + 1);
         }
 
         for (Map.Entry<String, Integer> entry : jamesBondActors.entrySet()) {

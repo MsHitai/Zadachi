@@ -6,9 +6,9 @@ public class KokoEatingBananas {
 
     public static void main(String[] args) {
 
-        int[] case1 = {3,6,7,11};
+        int[] case1 = {3, 6, 7, 11};
         int h = 8;
-        int[] case2 = {30,11,23,4,20};
+        int[] case2 = {30, 11, 23, 4, 20};
         int h2 = 5;
         int h3 = 6;
 
@@ -27,7 +27,7 @@ public class KokoEatingBananas {
     public static int minEatingSpeed(int[] piles, int h) {
         Arrays.sort(piles);
         int low = 1;
-        int high = piles[piles.length-1];
+        int high = piles[piles.length - 1];
 
         while (low < high) {
             int mid = (low + high) / 2;

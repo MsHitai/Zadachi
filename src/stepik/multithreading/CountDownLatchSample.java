@@ -15,14 +15,14 @@ public class CountDownLatchSample {
         for (int i = 0; i < 10; i++) {
             final int index = i;
             executorService.execute(() -> { // передали в executorService реализацию интерфейса Runnable
-                    System.out.println("Start - " + index);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println("Finish - " + index);
-                    countDownLatch.countDown();
+                System.out.println("Start - " + index);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("Finish - " + index);
+                countDownLatch.countDown();
             });
         }
         executorService.shutdown(); // с этого момента в него уже нельзя передавать новые задачи
@@ -38,6 +38,6 @@ public class CountDownLatchSample {
         ExecutorService executor1 = Executors.newSingleThreadExecutor(); // как fixed, но у него 1 поток создается
 
         ExecutorService executor = Executors.newCachedThreadPool(); // создает потоки по мере необходимости,
-                                                                // пул не уменьшается, может привезти к утечке ресурсов
+        // пул не уменьшается, может привезти к утечке ресурсов
     }
 }

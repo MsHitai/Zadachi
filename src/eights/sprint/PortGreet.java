@@ -36,12 +36,12 @@ public class PortGreet {
             // извлеките метод из запроса
             String method = httpExchange.getRequestMethod();
 
-            switch(method) {
+            switch (method) {
                 // сформируйте ответ в случае, если был вызван POST-метод
                 case "POST":
                     // извлеките тело запроса
                     InputStream bodyStream = httpExchange.getRequestBody();
-                    String body = new String(bodyStream.readAllBytes(),DEFAULT_CHARSET);
+                    String body = new String(bodyStream.readAllBytes(), DEFAULT_CHARSET);
 
                     URI requestURI = httpExchange.getRequestURI();
                     // извлеките path из запроса

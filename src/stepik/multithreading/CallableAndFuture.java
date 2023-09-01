@@ -29,11 +29,11 @@ public class CallableAndFuture {
         // submit возвращает параметризированный объект типа Future
 
         Future<String> futureName = executorService.submit(new Callable<String>() {
-        @Override
-        public String call() throws Exception {
-            Thread.sleep(5000); // здесь можно не оборачивать в try / catch
-             return "John";
-             }
+            @Override
+            public String call() throws Exception {
+                Thread.sleep(5000); // здесь можно не оборачивать в try / catch
+                return "John";
+            }
         });
 
         Future<Integer> futureAge = executorService.submit(() -> {

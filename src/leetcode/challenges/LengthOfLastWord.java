@@ -31,7 +31,7 @@ public class LengthOfLastWord {
     public static int lengthOfLastWord(String s) {
         int result = 0;
         String[] words = s.split(" ");
-        String lastWord = words[words.length-1];
+        String lastWord = words[words.length - 1];
         result = lastWord.length();
         return result;
     }
@@ -39,9 +39,9 @@ public class LengthOfLastWord {
     public static int lengthOfLastWord2(String s) {
         s = s.trim();
         int op = 0;
-        for(int i = s.length()-1; i>=0; i--) {
+        for (int i = s.length() - 1; i >= 0; i--) {
 
-            if(s.charAt(i) == ' '){
+            if (s.charAt(i) == ' ') {
                 break;
             }
             op++;

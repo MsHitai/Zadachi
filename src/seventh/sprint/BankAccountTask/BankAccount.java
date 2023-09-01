@@ -39,6 +39,6 @@ public class BankAccount {
     }
 
     public String[] getFullName() {
-        return new String[] {firstName, secondName};
+        return new String[]{firstName, secondName};
     }
 }

@@ -47,7 +47,7 @@ public class GamesForAll {
         // в случае ошибки выведите сообщение: "Произошла ошибка во время чтения файла."
         List<String> names = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            while(br.ready()) {
+            while (br.ready()) {
                 String line = br.readLine();
                 names.add(line);
             }

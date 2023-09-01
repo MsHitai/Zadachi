@@ -1,6 +1,9 @@
 package seventh.sprint.LeTumbler;
 
-import java.time.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 class Practicum {
@@ -133,6 +136,7 @@ class Practicum {
             System.out.println(e.getMessage());
         }
     }
+
     private static void printTicket(
             String departureTime,
             String departureAirportCode,

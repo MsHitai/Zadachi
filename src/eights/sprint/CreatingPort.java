@@ -11,7 +11,6 @@ import java.net.InetSocketAddress;
 import java.util.Random;
 
 
-
 public class CreatingPort {
     private static final int PORT = 8080;
 
@@ -78,6 +77,6 @@ public class CreatingPort {
  * involved in handling an exchange.
  *
  * @param exchange the exchange containing the request from the
- *                 client and used to send the response
+ * client and used to send the response
  * @throws NullPointerException if exchange is <code>null</code>
  */

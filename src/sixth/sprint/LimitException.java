@@ -1,6 +1,6 @@
 package sixth.sprint;
 
-public class LimitException extends RuntimeException{
+public class LimitException extends RuntimeException {
 
     private final int attempts;
 

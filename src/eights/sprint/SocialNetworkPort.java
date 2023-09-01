@@ -6,7 +6,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -19,7 +21,8 @@ class Post {
     private String text;
     private List<Comment> commentaries = new ArrayList<>();
 
-    private Post() {}
+    private Post() {
+    }
 
     public Post(int id, String text) {
         this.id = id;
@@ -43,7 +46,8 @@ class Comment {
     private String user;
     private String text;
 
-    private Comment() {}
+    private Comment() {
+    }
 
     public Comment(String user, String text) {
         this.user = user;
@@ -138,7 +142,7 @@ public class SocialNetworkPort {
 
         private void handleGetComments(HttpExchange exchange) throws IOException {
             Optional<Integer> postIdOpt = getPostId(exchange);
-            if(postIdOpt.isEmpty()) {
+            if (postIdOpt.isEmpty()) {
                 writeResponse(exchange, "Некорректный идентификатор поста", 400);
                 return;
             }
@@ -171,7 +175,7 @@ public class SocialNetworkPort {
         private void handlePostComments(HttpExchange exchange) throws IOException {
             // реализуйте обработку добавления комментария
             Optional<Integer> postIdOpt = getPostId(exchange);
-            if(postIdOpt.isEmpty()) {
+            if (postIdOpt.isEmpty()) {
                 writeResponse(exchange, "Некорректный идентификатор поста", 400);
                 return;
             }
@@ -222,7 +226,7 @@ public class SocialNetworkPort {
         private void writeResponse(HttpExchange exchange,
                                    String responseString,
                                    int responseCode) throws IOException {
-            if(responseString.isBlank()) {
+            if (responseString.isBlank()) {
                 exchange.sendResponseHeaders(responseCode, 0);
             } else {
                 byte[] bytes = responseString.getBytes(DEFAULT_CHARSET);

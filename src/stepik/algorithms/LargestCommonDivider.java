@@ -21,7 +21,7 @@ public class LargestCommonDivider {
         System.out.println(improvedCommonDivider(f, e));
     }
 
-    private static int improvedCommonDivider (int a, int b) {
+    private static int improvedCommonDivider(int a, int b) {
         while (a != 0 && b != 0) {
             if (a >= b) {
                 a = a % b;
@@ -32,7 +32,7 @@ public class LargestCommonDivider {
         return Math.max(a, b);
     }
 
-    private static int findCommonDivider (int a, int b) {
+    private static int findCommonDivider(int a, int b) {
         if (a == 0) {
             return b;
         } else if (b == 0) {

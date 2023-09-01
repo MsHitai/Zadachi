@@ -23,14 +23,14 @@ public class AtomicAndVolatile {
 
         int barrier = 1000;
 
-        Thread thread1 = new Thread( () -> {
+        Thread thread1 = new Thread(() -> {
 
             for (int i = 0; i < barrier; i++) {
                 counter.inc();
             }
         });
 
-        Thread thread2 = new Thread( () -> {
+        Thread thread2 = new Thread(() -> {
             for (int i = 0; i < barrier; i++) {
                 counter.dec();
             }

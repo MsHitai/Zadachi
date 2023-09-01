@@ -34,7 +34,7 @@ public class BookService {
                 .append(authorList.size())
                 .append(" авторами: ");
 
-        for (String author: authorList) {
+        for (String author : authorList) {
             result.append(author).append(" ");
         }
 

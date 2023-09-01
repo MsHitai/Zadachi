@@ -14,7 +14,7 @@ public class MultiThreadingGuessNumber {
         System.out.println("Think of a number from 0 to 100");
         int input = scanner.nextInt();
 
-        Thread thread = new Thread( () -> {
+        Thread thread = new Thread(() -> {
             while (!isGuessed) {
                 int random = rnd.nextInt(101);
                 if (random == input) {
@@ -25,7 +25,7 @@ public class MultiThreadingGuessNumber {
         });
         thread.start();
 
-        Thread thread2 = new Thread( () -> {
+        Thread thread2 = new Thread(() -> {
             for (int i = 1; i < 10000; i++) {
                 if (isGuessed) {
                     break;
@@ -37,7 +37,7 @@ public class MultiThreadingGuessNumber {
                     throw new RuntimeException(e);
                 }
             }
-        } );
+        });
         thread2.start();
     }
 }

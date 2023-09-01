@@ -43,7 +43,7 @@ public class KnapsackProblem {
         System.out.println(amount);
     }
 
-    public static double getTotalValue (List<Item> items, int maxCapacity) {
+    public static double getTotalValue(List<Item> items, int maxCapacity) {
         double result = 0;
 
         for (Item item : items) {
@@ -58,6 +58,7 @@ public class KnapsackProblem {
 
         return result;
     }
+
     public static List<Item> knapsack(List<Item> items, int maxCapacity) {
 
         double[][] table = new double[items.size() + 1][maxCapacity + 1];
@@ -86,6 +87,7 @@ public class KnapsackProblem {
         }
         return solution;
     }
+
     private static class Item {
         private final double volume;
         private final double value;

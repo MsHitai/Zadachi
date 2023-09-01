@@ -7,27 +7,27 @@ public class ThreadDaemon {
         long before = System.currentTimeMillis();
         int barrier = 10_000_000;
 
-        Thread thread1 = new Thread( () -> {
+        Thread thread1 = new Thread(() -> {
 
             for (int i = 0; i < barrier; i++) {
                 counter.increment();
             }
         });
 
-        Thread thread2 = new Thread( () -> {
+        Thread thread2 = new Thread(() -> {
             for (int i = 0; i < barrier; i++) {
                 counter.decrement();
             }
         });
 
-        Thread thread3 = new Thread( () -> {
+        Thread thread3 = new Thread(() -> {
 
             for (int i = 0; i < barrier; i++) {
                 counter.increment2();
             }
         });
 
-        Thread thread4 = new Thread( () -> {
+        Thread thread4 = new Thread(() -> {
 
             for (int i = 0; i < barrier; i++) {
                 counter.decrement2();

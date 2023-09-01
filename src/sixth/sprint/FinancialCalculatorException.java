@@ -1,9 +1,11 @@
 package sixth.sprint;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class FinancialCalculatorException {
     final static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         try {
             calculate();
@@ -14,7 +16,7 @@ public class FinancialCalculatorException {
     }
 
     public static double getInterest(final double rate, final int time, final double principal) {
-        final double multiplier = Math.pow(1.0 + rate/100.0, time) - 1.0;
+        final double multiplier = Math.pow(1.0 + rate / 100.0, time) - 1.0;
         return multiplier * principal;
     }
 

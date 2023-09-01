@@ -24,13 +24,13 @@ public class Counter {
     }
 
     public void increment2() {
-        synchronized(monitor) {
+        synchronized (monitor) {
             value2++;
         }
     }
 
     public void decrement2() {
-        synchronized(monitor) {
+        synchronized (monitor) {
             value2--;
         }
     }

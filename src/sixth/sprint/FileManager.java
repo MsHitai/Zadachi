@@ -29,8 +29,7 @@ public class FileManager {
                 case "ls":
                     try {
                         Files.list(path).collect(Collectors.toList()); // выведите список элементов директории
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         System.out.println("Произошла ошибка при запросе содержимого директории.");
                         e.printStackTrace();
                     }
@@ -39,8 +38,7 @@ public class FileManager {
                 case "mkdir":
                     try {
                         Path testDirectory = Files.createDirectory(path);// создайте директорию
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         System.out.println("Произошла ошибка при создании директории.");
                         e.printStackTrace();
                     }
@@ -48,8 +46,7 @@ public class FileManager {
                 case "touch":
                     try {
                         Path testFile = Files.createFile(path);// создайте файл
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         System.out.println("Произошла ошибка при создании файла.");
                         e.printStackTrace();
                     }
@@ -60,8 +57,7 @@ public class FileManager {
 
                     try {
                         Path testRename = Files.move(path, path.resolveSibling(newName), StandardCopyOption.REPLACE_EXISTING);// переименуйте файл
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         System.out.println("Произошла ошибка при переименовании файла/директории.");
                         e.printStackTrace();
                     }
@@ -70,12 +66,10 @@ public class FileManager {
                     try {
                         if (!Files.isDirectory(path)) {
                             Files.deleteIfExists(path);// удалите файл
-                        }
-                        else {
+                        } else {
                             System.out.println("С помощью этой команды можно удалить только файл!");
                         }
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         System.out.println("Произошла ошибка при удалении файла.");
                         e.printStackTrace();
                     }

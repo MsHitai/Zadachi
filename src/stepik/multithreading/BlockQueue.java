@@ -31,17 +31,17 @@ public class BlockQueue {
     public static void main(String[] args) {
         BlockQueue blockQueue = new BlockQueue();
 
-        new Thread( () -> {
+        new Thread(() -> {
             int i = 0;
             while (true) {
                 System.out.println("Count: " + i);
                 i++;
                 Runnable task = blockQueue.take();
-                if(task != null) {
+                if (task != null) {
                     new Thread(task).start();
                 }
             }
-        } ).start();
+        }).start();
 
         for (int i = 0; i < 10; i++) {
             final int index = i;

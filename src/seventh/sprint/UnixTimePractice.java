@@ -65,7 +65,7 @@ public class UnixTimePractice {
         System.out.printf(
                 "Это %.2f мин. или %.2f ч.%n",
                 calculateDuration(currentTime, timeToGoToSleep, TimeUnits.MINUTES),
-        calculateDuration(currentTime, timeToGoToSleep, TimeUnits.HOURS)
+                calculateDuration(currentTime, timeToGoToSleep, TimeUnits.HOURS)
         );
         System.out.printf("Ведь проснуться нужно уже через %.2f ч.%n",
                 calculateDuration(currentTime, timeToWakeUp, TimeUnits.HOURS));

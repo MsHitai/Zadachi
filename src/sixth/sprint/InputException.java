@@ -1,6 +1,6 @@
 package sixth.sprint;
 
-public class InputException extends Exception{
+public class InputException extends Exception {
 
     public InputException() {
     }
