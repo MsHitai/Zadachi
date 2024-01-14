@@ -13,25 +13,25 @@ public class CompletableExample {
 
         CompletableFuture<Void> future = CompletableFuture
                 .runAsync(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(3);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("Run Async Future Thread: " + Thread.currentThread().getName());
-        })
-                        .thenAcceptAsync(runAsync -> System.out.println(" run Async is done"));
+                    try {
+                        TimeUnit.SECONDS.sleep(3);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Run Async Future Thread: " + Thread.currentThread().getName());
+                })
+                .thenAcceptAsync(runAsync -> System.out.println(" run Async is done"));
         future.get();
 
         CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(2);
-                return "Supply Async Future Thread: " + Thread.currentThread().getName();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        })
-                        .thenApplyAsync(supply -> supply + " supply async is done");
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                        return "Supply Async Future Thread: " + Thread.currentThread().getName();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .thenApplyAsync(supply -> supply + " supply async is done");
         System.out.println(future2.get());
 
         CompletableFuture<Double> positive = CompletableFuture.supplyAsync(() -> {

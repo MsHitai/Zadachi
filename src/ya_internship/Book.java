@@ -1,6 +1,6 @@
 package ya_internship;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 public class Book implements Serializable {

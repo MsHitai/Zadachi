@@ -51,7 +51,7 @@ public class Sheriff {
             count++;
         }
 
-        if( count == SHERIFF.length() + 1) {
+        if (count == SHERIFF.length() + 1) {
             return min;
         } else if (min != 0 && count % min == 0) {
             return min;
