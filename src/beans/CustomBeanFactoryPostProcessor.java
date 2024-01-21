@@ -14,7 +14,7 @@ public class CustomBeanFactoryPostProcessor implements BeanFactoryPostProcessor 
         String[] beanNames = beanFactory.getBeanDefinitionNames();
         for (String beanName : beanNames) {
             if (beanFactory.getBeanDefinition(beanName).getPropertyValues().contains(targetPropertyName)) {
-                beanFactory.getBeanDefinition(beanName).getPropertyValues().add(targetPropertyName, targetValue);
+                beanFactory.getBeanDefinition(beanName).setAttribute(targetPropertyName, targetValue);
             }
         }
     }
