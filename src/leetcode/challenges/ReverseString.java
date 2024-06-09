@@ -19,7 +19,7 @@ public class ReverseString {
         System.out.println(a);// expected olleh
         System.out.println(b);// expected hannaH
         System.out.println(c);// expected amanaP :lanac a ,nalp a ,nam A
-        System.out.println(d);// expected amanaP : lanac a , nalp a ,nam A
+        System.out.println(d);// expected amanaP :lanac a ,nalp a ,nam A
     }
 
     public static void reverseString(char[] s) {

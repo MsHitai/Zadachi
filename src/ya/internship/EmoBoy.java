@@ -1,4 +1,4 @@
-package ya_internship;
+package ya.internship;
 
 import java.util.Scanner;
 
