@@ -1,57 +1,38 @@
 package ya.sre_contest;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TaskOne {
 
     public static void main(String[] args) {
-        List<Interval> intervals = new ArrayList<>();
+        Map<Integer, Integer> intervals = new TreeMap<>();
         Scanner sc = new Scanner(System.in);
         int numberOfIntervals = sc.nextInt();
         sc.nextLine();
         for (int i = 0; i < numberOfIntervals; i++) {
             String line = sc.nextLine();
             String[] dots = line.split(" ");
-            Interval interval = new Interval(Integer.parseInt(dots[0]), Integer.parseInt(dots[1]));
-            intervals.add(interval);
+            int start = Integer.parseInt(dots[0]);
+            int end = Integer.parseInt(dots[1]);
+            intervals.put(start, intervals.getOrDefault(start, 0) + 1);
+            intervals.put(end, intervals.getOrDefault(end, 0) - 1);
         }
         System.out.println(countCrossings(intervals));
         sc.close();
     }
 
-    private static int countCrossings(List<Interval> intervals) {
-        intervals.sort(Comparator.comparingInt(Interval::getBeginning));
-        int mostFrequentlyCrossed = intervals.get(0).getBeginning();
-        int lastEnd = intervals.get(0).getEnd();
-        for (int i = 1; i < intervals.size(); i++) {
-            Interval interval = intervals.get(i);
-            if (interval.getBeginning() >= mostFrequentlyCrossed && interval.getBeginning() <= lastEnd) {
-                mostFrequentlyCrossed = interval.getBeginning();
-                lastEnd = Integer.min(lastEnd, interval.getEnd());
+    private static int countCrossings(Map<Integer, Integer> intervals) {
+        int answer = 0;
+        int best = 0;
+        int current = 0;
+        for (Integer key : intervals.keySet()) {
+            current += intervals.get(key);
+            if (current > best) {
+                answer = key;
+                best = current;
             }
         }
 
-        return mostFrequentlyCrossed;
-    }
-
-    private static class Interval {
-        private final int beginning;
-        private final int end;
-
-        public Interval(int beginning, int end) {
-            this.beginning = beginning;
-            this.end = end;
-        }
-
-        public int getBeginning() {
-            return beginning;
-        }
-
-        public int getEnd() {
-            return end;
-        }
+        return answer;
     }
 }
