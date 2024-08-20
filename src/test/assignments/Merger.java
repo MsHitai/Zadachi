@@ -40,14 +40,12 @@ public class Merger {
             }
             k++;
         }
-
         // Копируем оставшиеся элементы из leftArray, если такие есть
         while (i < leftLength) {
             array[k] = leftArray[i];
             i++;
             k++;
         }
-
         // Копируем оставшиеся элементы из rightArray, если такие есть
         while (j < rightLength) {
             array[k] = rightArray[j];

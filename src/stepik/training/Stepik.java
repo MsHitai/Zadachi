@@ -1,23 +1,61 @@
-package stepik;
+package stepik.training;
 
 import java.util.Scanner;
 
 public class Stepik {
     public static void main(String[] args) {
+        int x, y;
+        String direction, result;
+
+        String[] inputValues = readInput();
+        x = Integer.parseInt(inputValues[0]);
+        y = Integer.parseInt(inputValues[1]);
+        direction = inputValues[2];
+        int[] newCoordinates = calculateCoordinates(x, y, direction);
+
+        result = "x: " + newCoordinates[0] + ", y: " + newCoordinates[1] + ", direction: " + direction;
+
+        System.out.println(result);
+    }
+
+    private static int[] calculateCoordinates(int x, int y, String direction) {
+        switch (direction) {
+            case "down" -> {
+                if (y > 0 && y < 100) {
+                    y = y + 1;
+                }
+            }
+            case "up" -> {
+                if (y > 0 && y < 100) {
+                    y = y - 1;
+                }
+            }
+            case "right" -> {
+                if (x > 0 && x < 100) {
+                    x = x + 1;
+                }
+            }
+            case "left" -> {
+                if (x > 0 && x < 100) {
+                    x = x - 1;
+                }
+            }
+        }
+        return new int[] {x, y};
+    }
+
+    public static String[] readInput() {
+        String[] inputValues = new String[3];
+
         Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine();
-        String[] people = line.split(" ");
-        int[] numbers = new int[people.length];
-
-        for (int i = 0; i < people.length; i++) {
-            numbers[i] = Integer.parseInt(people[i]);
+        if (scanner.hasNextLine()) {
+            String input = scanner.nextLine();
+            String[] values = input.split(" ");
+            System.arraycopy(values, 0, inputValues, 0, 3);
         }
+        scanner.close();
 
-        if (check(numbers)) {
-            System.out.println("YES");
-        } else {
-            System.out.println("NO");
-        }
+        return inputValues;
     }
 
     public static boolean check(int[] nums) {
@@ -29,27 +67,7 @@ public class Stepik {
                 count++;
             }
         }
-        if (count < nums.length && wrongOrder) {
-            return false;
-        }
-        return true;
-    }
-
-    public static int randomValue() {
-        int generatedValue = -3;
-        try {
-            java.util.Random random = new java.util.Random();
-            generatedValue = random.nextInt(100) / random.nextInt(10);
-        } catch (Throwable e) {
-            generatedValue = -1;
-        } finally {
-            generatedValue = -2;
-        }
-        return generatedValue;
-    }
-
-    public static int calculateTime(int juniors, int seniors, int checks) {
-        return juniors * checks / seniors + (juniors * checks % seniors != 0 ? 1 : 0);
+        return count >= nums.length || !wrongOrder;
     }
 
     private static int[] merge(int[] leftArray, int[] rightArray) {

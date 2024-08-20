@@ -11,6 +11,20 @@ public class Palindrome {
         System.out.println(Arrays.toString(nums));
     }
 
+    public static boolean isPalindrome(int x) {
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+
+        int revertedNumber = 0;
+        while (x > revertedNumber) {
+            revertedNumber = revertedNumber * 10 + x % 10;
+            x /= 10;
+        }
+
+        return x == revertedNumber || x == revertedNumber / 10;
+    }
+
     public static void selectionSort(int[] array) {
         for (int i = 0; i < array.length; i++) {
             int min = array[i];
@@ -26,19 +40,5 @@ public class Palindrome {
             array[i] = min;
             array[minId] = temp;
         }
-    }
-
-    public static boolean isPalindrome(int x) {
-        if (x < 0 || (x % 10 == 0 && x != 0)) {
-            return false;
-        }
-
-        int revertedNumber = 0;
-        while (x > revertedNumber) {
-            revertedNumber = revertedNumber * 10 + x % 10;
-            x /= 10;
-        }
-
-        return x == revertedNumber || x == revertedNumber / 10;
     }
 }

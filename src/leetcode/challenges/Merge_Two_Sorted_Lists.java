@@ -20,25 +20,20 @@ public class Merge_Two_Sorted_Lists {
         System.out.println(mergeTwoLists(node1, node2));
     }
 
-    static class ListNode {
+    public static class ListNode {
         int val;
         ListNode next;
 
-        ListNode() {
+        public ListNode() {
         }
 
         public void add(int val) {
             ListNode prev = next;
-            ListNode node = new ListNode(val, next);
-            next = node;
+            next = new ListNode(val, next);
 
         }
 
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
+        public ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
         }
@@ -57,12 +52,11 @@ public class Merge_Two_Sorted_Lists {
             if (list1.val < list2.val) {
                 temp.next = list1;
                 list1 = list1.next;
-                temp = temp.next;
             } else {
                 temp.next = list2;
                 list2 = list2.next;
-                temp = temp.next;
             }
+            temp = temp.next;
         }
         if (list1 == null) {
             temp.next = list2;

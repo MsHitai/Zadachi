@@ -17,7 +17,7 @@ public class Huffman {
         Scanner input = new Scanner(new File("input.txt"));
         String s = input.next();
 
-        if (s.length() == 0) {
+        if (s.isEmpty()) {
             System.out.println("0 0");
             System.out.println(s + ": 0");
             return;
