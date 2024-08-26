@@ -1,10 +1,8 @@
 package stepik.training;
 
-import java.util.Scanner;
-
 public class OneStarSolutions {
     public static void main(String[] args) {
-        int n = readInput();
+        int n = DragonGangs.readInput();
 
         int result = (int) Math.round((double) fact(n) / Math.E);
 
@@ -37,8 +35,4 @@ public class OneStarSolutions {
         return factorial * (1 + result);
     }
 
-    public static int readInput() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
 }
