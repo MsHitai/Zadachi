@@ -1,8 +1,6 @@
 package stepik.training;
 
 
-import lombok.Getter;
-
 import java.util.Scanner;
 
 /**
@@ -11,8 +9,8 @@ import java.util.Scanner;
 public class MessageRepeat {
     public static void main(String[] args) {
         var pair = readInput();
-        String message = pair.getFirst();
-        int k = pair.getSecond();
+        String message = pair.first();
+        int k = pair.second();
         String result = "";
         if (k > 0) {
             result = message.repeat(k);
@@ -35,17 +33,5 @@ public class MessageRepeat {
         int k = Integer.parseInt(input[1]);
         return new Pair<>(message, k);
     }
-}
-
-@Getter
-class Pair<F, S> {
-    private final F first;
-    private final S second;
-
-    public Pair(F first, S second) {
-        this.first = first;
-        this.second = second;
-    }
-
 }
 

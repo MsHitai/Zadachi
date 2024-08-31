@@ -46,6 +46,3 @@ public class DragonSlayer {
         return new Triple<>(n, m, k);
     }
 }
-
-record Triple<A, B, C>(A first, B second, C third) {
-}
