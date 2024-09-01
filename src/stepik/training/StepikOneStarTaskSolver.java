@@ -2,7 +2,10 @@ package stepik.training;
 
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Component
@@ -53,6 +56,111 @@ public class StepikOneStarTaskSolver {
         for (int i = 0; i < limit; i++) {
             data.add(i, 0);
         }
+    }
+
+    public static int findSumWithin(List<Integer> data, int start, int end) {
+        int indexStart = data.indexOf(start);
+        int indexEnd = data.lastIndexOf(end);
+        int sum = 0;
+        if (indexStart == -1 || indexEnd == -1) {
+            return sum;
+        }
+        for (int i = indexStart; i <= indexEnd; i++) {
+            sum += data.get(i);
+        }
+        return sum;
+    }
+
+    public static Integer findSideSum(List<List<Integer>> grid) {
+        if (grid.isEmpty()) {
+            return -1;
+        }
+        int sum = 0;
+        int first = 0;
+        for (int i = 0; i < grid.size(); i++) {
+            List<Integer> subArray = grid.get(i);
+            if (i == 0 || i == grid.size() - 1) {
+                for (Integer integer : subArray) {
+                    sum += integer;
+                }
+            }
+            sum += subArray.get(first) + subArray.get(subArray.size() - 1);
+        }
+        return sum;
+    }
+
+    public static Integer findDiagonalSum(List<List<Integer>> grid) {
+        if (!validSize(grid)) {
+            return -1;
+        }
+        int sum = 0;
+        int j = 0;
+
+        for (List<Integer> list : grid) {
+            sum += list.get(j++);
+
+        }
+
+        for (List<Integer> list : grid) {
+            sum += list.get(--j);
+
+        }
+        return sum;
+    }
+
+    private static boolean validSize(List<List<Integer>> grid) {
+        if (grid.isEmpty()) {
+            return false;
+        }
+        int horizontal = grid.get(0).size();
+        int countVertical = 0;
+        for (List<Integer> list : grid) {
+            countVertical++;
+        }
+        return horizontal == countVertical;
+    }
+
+    public static List<Integer> mirrorArray(List<Integer> data) {
+        List<Integer> result = new ArrayList<>(data);
+        data.remove(data.size() - 1);
+        Collections.reverse(data);
+        result.addAll(data);
+        return result;
+    }
+
+    public static String convertToString(List<Integer> arr) {
+        return arr.stream().map(String::valueOf).collect(Collectors.joining(", "));
+    }
+
+    public static List<Integer> replaceNegativeWithZero(List<Integer> data) {
+        List<Integer> result = new ArrayList<>(data);
+        for (Integer i : data) {
+            if (i < 0) {
+                result.add(data.indexOf(i), 0);
+                result.remove(i);
+            }
+        }
+        return result;
+    }
+
+    public static boolean hasTwoConsecutiveZeros(List<Integer> data) {
+        for (int i = 0; i < data.size() - 1; i++) {
+            if (data.get(i) == 0 && data.get(i + 1) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static List<Integer> replaceZeroWithSum(List<Integer> data) {
+        List<Integer> result = new ArrayList<>(data);
+        for (int i = 2; i < data.size(); i++) {
+            if (data.get(i) == 0) {
+                int sum = result.get(i - 2) + result.get(i - 1);
+                result.set(i, sum);
+            }
+        }
+        return result;
     }
 
     public static String countSymbols(List<String> data) {
