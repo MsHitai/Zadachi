@@ -33,6 +33,54 @@ public class StepikOneStarTaskSolver {
         }
     }
 
+    public static int calculateDifference(List<Integer> prices) {
+        int soldSum = 0;
+        int boughtSum = 0;
+        for (int i = 0; i < prices.size() - 1; i+=2) {
+            int bought = prices.get(i);
+            int sold = prices.get(i + 1);
+            soldSum += sold;
+            boughtSum += bought;
+        }
+        return soldSum - boughtSum;
+    }
+
+    public static List<Integer> columnSum(List<List<Integer>> data) {
+        List<Integer> result = new ArrayList<>();
+        int sum = 0;
+        int j = data.get(0).size();
+        int start = 0;
+        while (j > 0) {
+            for (List<Integer> subArray : data) {
+                sum += subArray.get(start);
+            }
+            result.add(sum);
+            sum = 0;
+            j--;
+            start++;
+        }
+        return result;
+    }
+
+    public static String balance(List<Integer> data) {
+        int half = data.size() / 2;
+        int sumLeft = 0;
+        int sumRight = 0;
+        for (int i = 0; i < half; i++) {
+            sumLeft += data.get(i);
+        }
+        for (int i = half; i < data.size(); i++) {
+            sumRight += data.get(i);
+        }
+        if (sumLeft > sumRight) {
+            return "Левая сторона тяжелее";
+        } else if (sumRight > sumLeft) {
+            return "Правая сторона тяжелее";
+        } else {
+            return "Обе стороны сбалансированы";
+        }
+    }
+
     private static String getResultString(List<Integer> data) {
         return data.stream()
                 .map(String::valueOf)
