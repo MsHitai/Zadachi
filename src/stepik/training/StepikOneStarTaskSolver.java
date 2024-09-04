@@ -2,10 +2,7 @@ package stepik.training;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,6 +15,81 @@ public class StepikOneStarTaskSolver {
     public static final String RIGHT = "right";
     public static final String LEFT = "left";
     private static final String WRONG_POSITION = "Неверная позиция";
+
+    public static int findMostFrequentElement(List<Integer> data) {
+        Map<Integer, Integer> indexToCount = new HashMap<>();
+        for (Integer datum : data) {
+            indexToCount.put(datum, indexToCount.getOrDefault(datum, 0) + 1);
+        }
+        int maxValue = indexToCount.values().stream().max(Integer::compareTo).orElse(- 1);
+        for (Map.Entry<Integer, Integer> entry : indexToCount.entrySet()) {
+            if (entry.getValue() == maxValue) {
+                return entry.getKey();
+            }
+        }
+        return -1;
+    }
+
+    public static String countZerosBeforeAndAfter(List<Integer> data) {
+        int beforeOne = 0;
+        int sum = 0;
+
+        for (Integer num : data) {
+            if (num == 1) {
+                beforeOne = sum;
+            }
+            sum++;
+        }
+
+        int afterOne = sum - beforeOne - 1;
+
+        return "Количество нулей перед единицей: " + beforeOne + ", Количество нулей после единицы: " + afterOne;
+    }
+
+    public static List<Integer> generateArray(int length) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 1; i <= length; i++) {
+            result.add(i);
+        }
+        List<Integer> copy = new ArrayList<>(result);
+        Collections.reverse(copy);
+        result.addAll(copy);
+        return result;
+    }
+
+    public static String countNumbers(List<Double> data) {
+        List<Long> result = new ArrayList<>();
+        Collections.sort(data);
+        result.add(countUnique(data));
+        result.add(countDuplicates(data));
+        result.add(data.stream().filter(n -> n == 0).count());
+        result.add(data.stream().filter(n -> n != 0).filter(n -> n % 2 == 0).count());
+        result.add(data.stream().filter(n -> n % 2 != 0).count());
+        return result.stream().map(String::valueOf).collect(Collectors.joining(", "));
+    }
+
+    private static Long countUnique(List<Double> data) {
+        long count = 0;
+        for (int i = 1; i <= data.size() - 1; i++) {
+            if (i == data.size() - 1 && !data.get(i).equals(data.get(i - 1))) {
+                count++;
+            }
+            if (!data.get(i).equals(data.get(i - 1)) && i + 1 < data.size() && !data.get(i).equals(data.get(i + 1))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private static Long countDuplicates(List<Double> data) {
+        Set<Double> temp = new HashSet<>();
+        for (int i = 1; i < data.size(); i++) {
+            if (data.get(i).equals(data.get(i - 1))) {
+                temp.add(data.get(i));
+            }
+        }
+        return (long) temp.size();
+    }
 
     public static String fillArray(int size, String position, List<Integer> data) {
         if (!RIGHT.equals(position) && !LEFT.equals(position)) {
