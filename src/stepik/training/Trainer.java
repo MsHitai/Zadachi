@@ -1,26 +1,25 @@
 package stepik.training;
 
 import com.google.gson.Gson;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
-import static stepik.training.StepikOneStarTaskSolver.findMostFrequentElement;
+import static stepik.training.StepikTwoStarLists.createTriangle;
 
+@SpringBootApplication
 public class Trainer {
 
     public static void main(String[] args) {
-        List<Integer> data = readInput();
-        int result = findMostFrequentElement(data);
-        System.out.println(result);
+        int height = readInput();
+        int[][] result = createTriangle(height);
+        Gson gson = new Gson();
+        String jsonResult = gson.toJson(result);
+        System.out.println(jsonResult);
     }
 
-    public static List<Integer> readInput() {
+    public static int readInput() {
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        Gson gson = new Gson();
-        Integer[] dataArray = gson.fromJson(input, Integer[].class);
-        return Arrays.asList(dataArray);
+        return Integer.parseInt(scanner.nextLine());
     }
 }
