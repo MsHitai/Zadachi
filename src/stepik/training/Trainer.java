@@ -1,25 +1,30 @@
 package stepik.training;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-import static stepik.training.StepikTwoStarLists.createTriangle;
+import static stepik.training.StepikTwoStarLists.sumOfMissPairs;
 
 @SpringBootApplication
 public class Trainer {
 
     public static void main(String[] args) {
-        int height = readInput();
-        int[][] result = createTriangle(height);
-        Gson gson = new Gson();
-        String jsonResult = gson.toJson(result);
-        System.out.println(jsonResult);
+        List<Integer> data = readInput();
+        String result = sumOfMissPairs(data);
+        System.out.println(result);
     }
 
-    public static int readInput() {
+    public static List<Integer> readInput() {
         Scanner scanner = new Scanner(System.in);
-        return Integer.parseInt(scanner.nextLine());
+        String input = scanner.nextLine();
+        Type listType = new TypeToken<ArrayList<Integer>>() {
+        }.getType();
+        return new Gson().fromJson(input, listType);
     }
 }

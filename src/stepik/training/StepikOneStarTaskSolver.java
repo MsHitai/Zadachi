@@ -16,12 +16,48 @@ public class StepikOneStarTaskSolver {
     public static final String LEFT = "left";
     private static final String WRONG_POSITION = "Неверная позиция";
 
+    public static int findThirdMax(List<Integer> data) {
+        Set<Integer> unique = new HashSet<>(data);
+        List<Integer> result = new ArrayList<>(unique);
+        Collections.sort(result);
+        Collections.reverse(result);
+        return result.size() >= 3 ? result.get(result.size() - 1) : Collections.max(result);
+    }
+
+    public static int findSeriesCount(List<Integer> data) {
+        int count = 0;
+        for (int i = 1; i < data.size(); i++) {
+            if (data.get(i).equals(data.get(i - 1))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int findLongestSeries(List<Integer> data) {
+        List<Integer> maxes = new ArrayList<>();
+        int count = 1;
+        int max;
+        for (int i = 1; i < data.size(); i++) {
+            if (data.get(i) > data.get(i - 1)) {
+                count++;
+            } else {
+                max = count;
+                maxes.add(max);
+                count = 0;
+            }
+        }
+        max = count;
+        maxes.add(max);
+        return maxes.stream().max(Integer::compareTo).orElse(-1);
+    }
+
     public static int findMostFrequentElement(List<Integer> data) {
         Map<Integer, Integer> indexToCount = new HashMap<>();
         for (Integer datum : data) {
             indexToCount.put(datum, indexToCount.getOrDefault(datum, 0) + 1);
         }
-        int maxValue = indexToCount.values().stream().max(Integer::compareTo).orElse(- 1);
+        int maxValue = indexToCount.values().stream().max(Integer::compareTo).orElse(-1);
         for (Map.Entry<Integer, Integer> entry : indexToCount.entrySet()) {
             if (entry.getValue() == maxValue) {
                 return entry.getKey();
@@ -108,7 +144,7 @@ public class StepikOneStarTaskSolver {
     public static int calculateDifference(List<Integer> prices) {
         int soldSum = 0;
         int boughtSum = 0;
-        for (int i = 0; i < prices.size() - 1; i+=2) {
+        for (int i = 0; i < prices.size() - 1; i += 2) {
             int bought = prices.get(i);
             int sold = prices.get(i + 1);
             soldSum += sold;
