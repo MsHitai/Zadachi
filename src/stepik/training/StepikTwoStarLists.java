@@ -2,11 +2,10 @@ package stepik.training;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Component
 public class StepikTwoStarLists {
@@ -116,5 +115,76 @@ public class StepikTwoStarLists {
         List<Integer> copy = new ArrayList<>(data);
         Collections.sort(copy);
         return data.equals(copy);
+    }
+
+    public static List<List<String>> advancedSort(List<String> data) {
+        Map<String, Integer> copies = new LinkedHashMap<>();
+        for (String word : data) {
+            copies.put(word, copies.getOrDefault(word, 0) + 1);
+        }
+        List<List<String>> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : copies.entrySet()) {
+            String word = entry.getKey();
+            int repeated = entry.getValue();
+            List<String> subArray = new ArrayList<>();
+            for (int i = 0; i < repeated; i++) {
+                subArray.add(word);
+            }
+            result.add(subArray);
+        }
+        return result;
+    }
+
+    public static List<String> badCustomSort(List<String> data, String order) {
+        List<Character> temp = new ArrayList<>();
+        List<String> copy = new ArrayList<>();
+        String str;
+        switch (order) {
+            case "ASC" -> {
+                for (String s : data) {
+                    for (int i = 0; i < s.length(); i++) {
+                        temp.add(s.charAt(i));
+                    }
+                    str = temp.stream().map(String::valueOf)
+                            .sorted()
+                            .collect(Collectors.joining(""));
+                    temp.clear();
+                    copy.add(str);
+                }
+                return copy;
+            }
+            case "DESC" -> {
+                for (String s : data) {
+                    for (int i = 0; i < s.length(); i++) {
+                        temp.add(s.charAt(i));
+                    }
+                    str = temp.stream().map(String::valueOf)
+                            .sorted(Comparator.comparing(String::valueOf).reversed())
+                            .collect(Collectors.joining(""));
+                    temp.clear();
+                    copy.add(str);
+                }
+                return copy;
+            }
+        }
+        return null;
+    }
+
+    public static List<String> betterCustomSort(List<String> data, String order) {
+        return data.stream()
+                .map(it -> Stream.of(it.split(""))
+                        .sorted(order.equals("ASC") ? Comparator.naturalOrder() : Comparator.reverseOrder())
+                        .collect(Collectors.joining()))
+                .toList();
+    }
+
+    public static List<Integer> customSort(List<Integer> data, String order) {
+        return data.stream()
+                .map(String::valueOf)
+                .map(s -> Stream.of(s.split(""))
+                        .sorted(order.equals("ASC") ? Comparator.naturalOrder() : Comparator.reverseOrder())
+                        .collect(Collectors.joining()))
+                .map(Integer::parseInt)
+                .toList();
     }
 }

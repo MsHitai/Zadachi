@@ -9,22 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static stepik.training.StepikTwoStarLists.sumOfMissPairs;
+import static stepik.training.StepikTwoStarLists.customSort;
 
 @SpringBootApplication
 public class Trainer {
 
     public static void main(String[] args) {
-        List<Integer> data = readInput();
-        String result = sumOfMissPairs(data);
-        System.out.println(result);
+        Pair<List<Integer>, String> input = readInput();
+        List<Integer> data = input.first();
+        String order = input.second();
+        List<Integer> result = customSort(data, order);
+        System.out.println(new Gson().toJson(result));
     }
 
-    public static List<Integer> readInput() {
+    public static Pair<List<Integer>, String> readInput() {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
+        String[] parts = input.split(" \\| ");
         Type listType = new TypeToken<ArrayList<Integer>>() {
         }.getType();
-        return new Gson().fromJson(input, listType);
+        List<Integer> data = new Gson().fromJson(parts[0], listType);
+        String order = parts[1].trim();
+        return new Pair<>(data, order);
     }
 }
