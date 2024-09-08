@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Component
+@SuppressWarnings("unused")
 public class StepikTwoStarLists {
 
     public static int[][] createTriangle(int height) {
@@ -186,5 +187,25 @@ public class StepikTwoStarLists {
                         .collect(Collectors.joining()))
                 .map(Integer::parseInt)
                 .toList();
+    }
+
+    public static List<Integer> cyclicRightShift(List<Integer> data, int shift) {
+        Collections.rotate(data, shift);
+        return data;
+    }
+
+    public static List<List<Integer>> cyclicLeftShift(List<List<Integer>> data, int shift) {
+        for (List<Integer> list : data) {
+            Collections.rotate(list, -shift);
+        }
+        return data;
+    }
+
+    public static int[][] createRectangle(int width, int height) {
+        int[][] res = new int[height][width];
+        for (int[] re : res) {
+            Arrays.fill(re, 1);
+        }
+        return res;
     }
 }
