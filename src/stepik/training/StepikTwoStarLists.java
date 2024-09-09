@@ -208,4 +208,72 @@ public class StepikTwoStarLists {
         }
         return res;
     }
+
+    public static List<List<Integer>> fillDiagonalListIncrement(int n) {
+        List<List<Integer>> result = new ArrayList<>();
+        int zeroIndex = 0;
+        int increment = 0;
+        int temp;
+
+        for (int i = 0; i < n; i++) {
+            temp = i;
+            List<Integer> sub = new ArrayList<>();
+            for (int k = 0; k < n; k++) {
+                if (k == zeroIndex) {
+                    sub.add(0);
+                    increment = 1;
+                } else if (k < zeroIndex) {
+                    sub.add(temp--);
+                } else {
+                    sub.add(increment++);
+                }
+            }
+            zeroIndex++;
+            result.add(sub);
+        }
+        return result;
+    }
+
+    public static List<List<Integer>> fillDiagonalList(int n) {
+        List<List<Integer>> result = new ArrayList<>();
+        int oneIndex = n - 1;
+
+        for (int i = 0; i < n; i++) {
+            List<Integer> sub = new ArrayList<>();
+            for (int k = 0; k < n; k++) {
+                if (k < oneIndex) {
+                    sub.add(0);
+                } else if (k > oneIndex) {
+                    sub.add(2);
+                } else {
+                    sub.add(1);
+                }
+            }
+            result.add(sub);
+            oneIndex--;
+        }
+        return result;
+    }
+
+    public static List<Integer> processArray(List<Integer> data) {
+        int numberLess = data.get(0);
+        int max = data.get(data.size() - 1);
+
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i) < max) {
+                data.set(i, numberLess);
+            }
+        }
+        return data;
+    }
+
+    public static List<Integer> swapElements(List<Integer> data) {
+        int max = data.stream().filter(n -> n % 2 == 0).max(Integer::compareTo).orElse(-1);
+        int min = data.stream().min(Integer::compareTo).orElse(-1);
+        int maxIndex = data.indexOf(max);
+        int minIndex = data.indexOf(min);
+        data.set(maxIndex, min);
+        data.set(minIndex, max);
+        return data;
+    }
 }
