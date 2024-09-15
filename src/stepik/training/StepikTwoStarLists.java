@@ -11,6 +11,67 @@ import java.util.stream.Stream;
 @SuppressWarnings("unused")
 public class StepikTwoStarLists {
 
+    public static List<Integer> findNextHotterDay(List<Integer> data) {
+        List<Integer> result = new ArrayList<>();
+        int count;
+
+        for (int i = 0; i < data.size(); i++) {
+            count = 0;
+            for (int j = i + 1; j < data.size(); j++) {
+                if (data.get(i) < data.get(j)) {
+                    count++;
+                    break;
+                } else {
+                    count++;
+                }
+                if (j == data.size() - 1) {
+                    count = 0;
+                }
+            }
+            result.add(count);
+        }
+        return result;
+    }
+
+    public static List<String> findIfIncluded(String targetWord, List<String> data) {
+        Set<String> dictionary = new HashSet<>(data);
+        List<String> result = new ArrayList<>();
+        List<String> output = new ArrayList<>();
+        findWords(targetWord, output, dictionary, result);
+        return result;
+    }
+
+    private static void findWords(String targetWord, List<String> output, Set<String> dictionary, List<String> result) {
+        if (targetWord.isEmpty()) {
+            result.add(String.join(" ", output));
+        }
+
+        for (int i = 0; i <= targetWord.length(); i++) {
+            String word = targetWord.substring(0, i);
+            if (dictionary.contains(word)) {
+                output.add(word);
+                findWords(targetWord.substring(i), output, dictionary, result);
+                output.remove(output.size() - 1);
+            }
+        }
+    }
+
+    public static int findMaxMultiplySublist(List<Integer> data) {
+        int best = 1;
+        int current;
+        for (int i = 0; i < data.size(); i++) {
+            current = data.get(i);
+            for (int j = i + 1; j < data.size(); j++) {
+                current = current * data.get(j);
+                if (current > best) {
+                    best = current;
+                }
+            }
+        }
+
+        return best;
+    }
+
     public static int[][] createTriangle(int height) {
         int size = height + height - 1;
         int half = size / 2;
