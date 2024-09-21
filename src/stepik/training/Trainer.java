@@ -4,25 +4,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Scanner;
 
-import static stepik.training.StepikOneStarString.increaseStringById;
+import static stepik.training.StepikOneStarString.splitStringIntoCases;
 
 @SpringBootApplication
 public class Trainer {
 
     public static void main(String[] args) {
-        Pair<Integer, String> input = readInput();
-        int uriId = input.first();
+        Pair<String, String> input = readInput();
+        int cases = Integer.parseInt(input.first());
         String message = input.second();
-        String result = increaseStringById(message, uriId);
+        String result = splitStringIntoCases(message, cases);
 
         System.out.println(result);
     }
 
-    public static Pair<Integer, String> readInput() {
+    public static Pair<String, String> readInput() {
         Scanner scanner = new Scanner(System.in);
-        String[] input = scanner.nextLine().split(" \\| ");
-        int uriId = Integer.parseInt(input[0].trim());
-        String message = input[1].trim();
-        return new Pair<>(uriId, message);
+        String input = scanner.nextLine();
+        String[] splitInput = input.split(" \\| ");
+        return new Pair<>(splitInput[0], splitInput[1]);
     }
 }
