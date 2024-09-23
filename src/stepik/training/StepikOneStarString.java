@@ -15,6 +15,35 @@ public class StepikOneStarString {
         return sb.toString().equals(value);
     }
 
+    public static String tagNames(String message) {
+        String[] tagNames = message.split(">");
+        String format = "<%s><%s><%s></%s></%s></%s>";
+        return String.format(format, tagNames[0], tagNames[1], tagNames[2], tagNames[2], tagNames[1], tagNames[0]);
+    }
+
+    public static String getTags(String message) {
+        String[] array = message.split("\\.");
+        String tag = array[0];
+        String classes = Arrays.stream(array)
+                .skip(1)
+                .collect(Collectors.joining(" "));
+        String template = "<%s class=\"%s\"></%s>";
+
+        return String.format(template, tag, classes, tag);
+    }
+
+    public static String sortCharactersInWords(String message) {
+        String[] words = message.split(" ");
+        List<String> sortedLetters = new ArrayList<>();
+        String sortWord;
+        for (String word : words) {
+            String[] letters = word.split("");
+            sortWord = Arrays.stream(letters).sorted().collect(Collectors.joining());
+            sortedLetters.add(sortWord);
+        }
+        return String.join(" ", sortedLetters);
+    }
+
     public static String removeVowels(String message) {
         Set<String> vowels = Set.of("а","у","о","ы","э","я","ю","ё","и","е");
         StringBuilder sb = new StringBuilder();
