@@ -15,6 +15,53 @@ public class StepikOneStarString {
         return sb.toString().equals(value);
     }
 
+    public static String upperCamelToSnake(String message) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < message.length(); i++) {
+            String lowerCase = String.valueOf(message.charAt(i)).toLowerCase();
+            if (i == 0) {
+                sb.append(lowerCase);
+                continue;
+            }
+            if (Character.isUpperCase(message.charAt(i))) {
+                sb.append("_");
+                sb.append(lowerCase);
+                continue;
+            }
+            sb.append(message.charAt(i));
+        }
+        return sb.toString();
+    }
+
+    public static String kebabToLowerCamel(String message) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < message.length(); i++) {
+            if (message.charAt(i) == '-') {
+                sb.append(String.valueOf(message.charAt(i + 1)).toUpperCase());
+                i++;
+                continue;
+            }
+            sb.append(message.charAt(i));
+        }
+
+        return sb.toString();
+    }
+
+    public static String toTag(String message) {
+        int bracketIndex = message.indexOf("{");
+        String greeting = message.substring(bracketIndex + 1, message.indexOf("}"));
+        String[] toTags = message.substring(0, bracketIndex).split(">");
+        StringBuilder sb = new StringBuilder();
+        for (String tag : toTags) {
+            sb.append("<").append(tag).append(">");
+        }
+        sb.append(greeting);
+        for (int i = toTags.length - 1; i >= 0; i--) {
+            sb.append("</").append(toTags[i]).append(">");
+        }
+        return sb.toString();
+    }
+
     public static String tagNames(String message) {
         String[] tagNames = message.split(">");
         String format = "<%s><%s><%s></%s></%s></%s>";
@@ -45,7 +92,7 @@ public class StepikOneStarString {
     }
 
     public static String removeVowels(String message) {
-        Set<String> vowels = Set.of("а","у","о","ы","э","я","ю","ё","и","е");
+        Set<String> vowels = Set.of("а", "у", "о", "ы", "э", "я", "ю", "ё", "и", "е");
         StringBuilder sb = new StringBuilder();
         String[] letters = message.split("");
         for (String letter : letters) {
