@@ -11,7 +11,7 @@ public class Trainer {
 
     public static void main(String[] args) {
         String message = readInput();
-        String result = upperCamelToSnake(message);
+        String result = detectCase(message);
 
         System.out.println(result);
     }

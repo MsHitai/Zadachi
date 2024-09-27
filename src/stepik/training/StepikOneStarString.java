@@ -3,6 +3,8 @@ package stepik.training;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
@@ -13,6 +15,24 @@ public class StepikOneStarString {
         StringBuilder sb = new StringBuilder(value);
         sb.reverse();
         return sb.toString().equals(value);
+    }
+
+    public static String detectCase(String message) {
+        Map<String, Pattern> cases = new HashMap<>();
+        cases.put("kebab-case", Pattern.compile("^[a-z]+(-[a-z]+)*$"));
+        cases.put("snake_case", Pattern.compile("^[a-z]+(_[a-z]+)*$"));
+        cases.put("lowerCamelCase", Pattern.compile("^[a-z]+([A-Z][a-z0-9]*)*$"));
+        cases.put("UpperCamelCase", Pattern.compile("^[A-Z][a-z0-9]*([A-Z][a-z0-9]*)*$"));
+
+        for (Map.Entry<String, Pattern> entry : cases.entrySet()) {
+            String key = entry.getKey();
+            Pattern pattern = entry.getValue();
+            Matcher matcher = pattern.matcher(message);
+            if (matcher.matches()) {
+                return key;
+            }
+        }
+        return "unknown";
     }
 
     public static String upperCamelToSnake(String message) {
