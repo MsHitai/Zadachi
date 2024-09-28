@@ -4,15 +4,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Scanner;
 
-import static stepik.training.StepikOneStarString.*;
+import static stepik.training.StepikOneStarString.mask;
 
 @SpringBootApplication
 public class Trainer {
 
     public static void main(String[] args) {
         String message = readInput();
-        String result = detectCase(message);
-
+        String result = mask(message);
         System.out.println(result);
     }
 

@@ -17,6 +17,80 @@ public class StepikOneStarString {
         return sb.toString().equals(value);
     }
 
+    public static String mask(String message) {
+        if (message.length() == 4) {
+            return message;
+        }
+        String toMask = message.substring(0, message.length() - 4);
+        return "#".repeat(toMask.length()) + message.substring(message.length() - 4);
+    }
+
+    public static List<Character> getFirstAndLastLetters(List<String> words) {
+        List<Character> result = new ArrayList<>();
+        for (String word : words) {
+            result.add(word.charAt(0));
+            result.add(word.charAt(word.length() - 1));
+        }
+        return result;
+    }
+
+    public static List<Character> getCentralLetters(List<String> words) {
+        return words.stream()
+                .filter(word -> word.length() % 2 != 0)
+                .map(word -> word.charAt(word.length() / 2))
+                .toList();
+    }
+
+    public static List<Character> splitWords(List<String> words) {
+        return words.stream()
+                .flatMap(word -> word.chars().mapToObj(letter -> (char) letter))
+                .toList();
+    }
+
+    public static String newMessage(String message) {
+        StringBuilder sb = new StringBuilder();
+        int j = 2;
+        for (int i = 0; i < message.length(); i++) {
+            if (i == j) {
+                j += 3;
+                continue;
+            }
+            sb.append(message.charAt(i));
+        }
+        return sb.toString();
+    }
+
+    public static int findLongestWordLength(String message) {
+        return Arrays.stream(message.split(" "))
+                .sorted(Comparator.comparing(String::length).reversed())
+                .map(String::length)
+                .findFirst()
+                .orElse(-1);
+    }
+
+    public static int findShortestWordLength(String message) {
+        String[] words = message.split(" ");
+        int minLength = words[0].length();
+        for (String word : words) {
+            if (word.length() < minLength) {
+                minLength = word.length();
+            }
+        }
+        return minLength;
+    }
+
+    public static int countWords(String message) {
+        String[] words = message.split(" ");
+        int count = 0;
+
+        for (String word : words) {
+            if (String.valueOf(word.charAt(0)).equalsIgnoreCase(String.valueOf(word.charAt(word.length() - 1)))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public static String detectCase(String message) {
         Map<String, Pattern> cases = new HashMap<>();
         cases.put("kebab-case", Pattern.compile("^[a-z]+(-[a-z]+)*$"));
