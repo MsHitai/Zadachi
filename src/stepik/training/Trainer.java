@@ -1,22 +1,31 @@
 package stepik.training;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Scanner;
 
-import static stepik.training.StepikOneStarString.mask;
+import static stepik.training.StepikThreeStarLists.countTiles;
 
 @SpringBootApplication
 public class Trainer {
 
     public static void main(String[] args) {
-        String message = readInput();
-        String result = mask(message);
+        List<List<Integer>> grid = readInput();
+        String result = countTiles(grid);
+
         System.out.println(result);
     }
 
-    public static String readInput() {
+    public static List<List<Integer>> readInput() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine().trim();
+        String input = scanner.nextLine();
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<List<Integer>>>() {
+        }.getType();
+        return gson.fromJson(input, listType);
     }
 }
