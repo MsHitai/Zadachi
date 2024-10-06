@@ -8,14 +8,14 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Scanner;
 
-import static stepik.training.StepikThreeStarLists.countTiles;
+import static stepik.training.StepikThreeStarLists.analyzeVolcano;
 
 @SpringBootApplication
 public class Trainer {
 
     public static void main(String[] args) {
         List<List<Integer>> grid = readInput();
-        String result = countTiles(grid);
+        String result = analyzeVolcano(grid);
 
         System.out.println(result);
     }
