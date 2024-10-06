@@ -2,7 +2,6 @@ package stepik.training;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.Scanner;
 
 import static stepik.training.StepikThreeStarLists.analyzeVolcano;
 
-@SpringBootApplication
 public class Trainer {
 
     public static void main(String[] args) {
