@@ -1,12 +1,16 @@
 package leetcode.easy;
 
-public class ScoreOfString {
+@SuppressWarnings("unused")
+public class EasySolutions {
 
     public static void main(String[] args) {
-        String s = "hello";
-        String a = "zaz";
-        System.out.println(scoreOfString(s));
-        System.out.println(scoreOfString(a));
+        int num = 3;
+        int t = 2;
+        System.out.println(theMaximumAchievableX(num, t));
+    }
+
+    public static int theMaximumAchievableX(int num, int t) {
+        return num + (2 * t);
     }
 
     public static int scoreOfString(String s) {
