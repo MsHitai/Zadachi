@@ -7,6 +7,7 @@ public class MediumSolutions {
 
     public static void main(String[] args) {
         ListNode head = new ListNode(18, new ListNode(6, new ListNode(10, new ListNode(3, null))));
+        ListNode head2 = new ListNode(18, new ListNode(6, new ListNode(10, new ListNode(3, null))));
         long before = System.currentTimeMillis();
         System.out.println(before);
         System.out.println(insertGCD(head));
@@ -15,7 +16,7 @@ public class MediumSolutions {
 
         System.out.println("faster way");
         before = System.currentTimeMillis();
-        System.out.println(insertGreatestCommonDivisors(head));
+        System.out.println(insertGreatestCommonDivisors(head2));
         System.out.println(Math.abs(before - System.currentTimeMillis()));
     }
 
