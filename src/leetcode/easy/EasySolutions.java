@@ -1,27 +1,37 @@
 package leetcode.easy;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.Scanner;
 
 @SuppressWarnings("unused")
 public class EasySolutions {
 
-    public static void main(String[] args) {
-        int[] digits_123 = new int[]{1, 2, 3};
-        int[] digits_4322 = new int[]{4, 3, 2, 1};
+    public static void main(String[] args) throws FileNotFoundException {
         int[] digits_10 = new int[]{9};
-        int[] digits_9876543210 = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-        int[] digits_tooLong = new int[]{7, 2, 8, 5, 0, 9, 1, 2, 9, 5, 3, 6, 6, 7, 3, 2, 8, 4, 3, 7, 9, 5, 7, 7, 4, 7,
-                4, 9, 4, 7, 0, 1, 1, 1, 7, 4, 0, 0, 6};
-        int[] digits_4999 = new int[]{4, 9, 9, 9};
-        int[] digits_999 = new int[]{9, 9, 9};
-        System.out.println(Arrays.toString(plusOne(digits_999)));
-        System.out.println(Arrays.toString(plusOne(digits_123)));
-        System.out.println(Arrays.toString(plusOne(digits_4322)));
-        System.out.println(Arrays.toString(plusOne(digits_10)));
-        System.out.println(Arrays.toString(plusOne(digits_9876543210)));
-        System.out.println(Arrays.toString(plusOne(digits_tooLong)));
-        System.out.println(Arrays.toString(plusOne(digits_4999)));
+        System.out.println(Arrays.toString(plusOneShort(digits_10)));
+
+        Scanner scanner = new Scanner(new File("input.txt"));
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+        System.out.println(findCombinations(n, k));
+    }
+
+    private static int findCombinationsWithRepetitions(int n, int k) {
+        int numerator = k + n - 1;
+        int denumerator = factorial(n - 1) * factorial(k);
+        return factorial(numerator) / denumerator;
+    }
+
+    private static int findCombinations(int n, int k) {
+        return factorial(n) / (factorial(k) * factorial(n - k));
+    }
+
+    public static int factorial(int n) {
+        if (n <= 1) {
+            return 1;
+        } else return n * factorial(n - 1);
     }
 
     public static int theMaximumAchievableX(int num, int t) {
@@ -36,7 +46,7 @@ public class EasySolutions {
         return result;
     }
 
-    public int[] plusOneShort(int[] digits) {
+    public static int[] plusOneShort(int[] digits) {
         for (int i = digits.length - 1; i >= 0; i--) {
             if (digits[i] < 9) {
                 digits[i]++;
@@ -52,14 +62,10 @@ public class EasySolutions {
 
     public static int[] plusOne(int[] digits) {
         increase(digits);
-        String numberValue = Arrays.stream(digits)
+        return Arrays.stream(digits)
                 .mapToObj(String::valueOf)
-                .collect(Collectors.joining());
-        int[] result = new int[numberValue.length()];
-        for (int i = 0; i < numberValue.length(); i++) {
-            result[i] = Integer.parseInt(String.valueOf(numberValue.charAt(i)));
-        }
-        return result;
+                .mapToInt(Integer::parseInt)
+                .toArray();
     }
 
     private static void increase(int[] digits) {
