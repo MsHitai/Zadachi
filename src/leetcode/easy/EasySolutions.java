@@ -16,6 +16,8 @@ public class EasySolutions {
         int n = scanner.nextInt();
         int k = scanner.nextInt();
         System.out.println(findCombinations(n, k));
+        System.out.println(factorial(n));
+        System.out.println(findCombinationsWithRepetitions(n, k));
     }
 
     private static int findCombinationsWithRepetitions(int n, int k) {
@@ -29,9 +31,11 @@ public class EasySolutions {
     }
 
     public static int factorial(int n) {
-        if (n <= 1) {
-            return 1;
-        } else return n * factorial(n - 1);
+        int result = 1;
+        for (int i = 1; i <= n; i++) {
+            result = result * i;
+        }
+        return result;
     }
 
     public static int theMaximumAchievableX(int num, int t) {
