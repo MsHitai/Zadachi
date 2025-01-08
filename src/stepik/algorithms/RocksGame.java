@@ -11,27 +11,43 @@ public class RocksGame {
         Scanner scanner = new Scanner(new File("input.txt"));
         int n = scanner.nextInt();
         int m = scanner.nextInt();
-        System.out.println(findUnevenGameResult(n, m));
+        scanner.close();
+
+        System.out.println(findGameResult(n, m));
     }
 
-    private static String findUnevenGameResult(int n, int m) {
-        String lose = "Lose";
-        String win = "Win";
-        List<String> evenRow = new ArrayList<>();
-        for (int i = 0; i <= n; i = i + 3) {
-            evenRow.add(lose);
-            evenRow.add(win);
-            evenRow.add(win);
+    private static String findGameResult(int n, int m) {
+        int[][] result = new int[n + 1][m + 1];
+
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                boolean canWin = checkCanWin(i, result, j);
+                result[i][j] = canWin ? 1 : 0;
+            }
         }
-        Map<Boolean, List<String>> result = new HashMap<>();
-        result.put(Boolean.TRUE, evenRow);
-        boolean even = m % 2 == 0;
-        if (even) {
-            List<String> values = result.get(Boolean.TRUE);
-            return values.get(n - 1);
-        } else {
-            return win;
+
+        return result[n][m] == 1 ? "Win" : "Lose";
+    }
+
+    private static boolean checkCanWin(int i, int[][] result, int j) {
+        boolean canWin = i > 0 && result[i - 1][j] == 0;
+        // Take 1 stone from one pile
+        if (j > 0 && result[i][j - 1] == 0) {
+            canWin = true;
         }
+
+        // Take 2 stones from one pile
+        if (i >= 2 && result[i - 2][j] == 0) {
+            canWin = true;
+        }
+        if (j >= 2 && result[i][j - 2] == 0) {
+            canWin = true;
+        }
+
+        // Take 2 from one and 1 from another
+        if (i >= 2 && j >= 1 && result[i - 2][j - 1] == 0) canWin = true;
+        if (i >= 1 && j >= 2 && result[i - 1][j - 2] == 0) canWin = true;
+        return canWin;
     }
 
     private static String findEvenGameResult(int n, int m) {
