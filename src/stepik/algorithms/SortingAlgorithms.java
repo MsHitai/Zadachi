@@ -2,7 +2,9 @@ package stepik.algorithms;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -10,13 +12,24 @@ public class SortingAlgorithms {
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File("input.txt"));
-        int n = scanner.nextInt();
-        int[] array = new int[n];
-        for (int i = 0; i < n; i++) {
-            array[i] = scanner.nextInt();
+        List<Integer> all = new ArrayList<>();
+        int cycles = scanner.nextInt();
+        for (int i = 0; i < cycles; i++) {
+            int n = scanner.nextInt();
+            Integer[] array = new Integer[n];
+            for (int j = 0; j < n; j++) {
+                array[j] = scanner.nextInt();
+            }
+            all.addAll(Arrays.asList(array));
+        }
+        int[] array = new int[all.size()];
+        for (int i = 0; i < all.size(); i++) {
+            array[i] = all.get(i);
         }
         mergeSort(array, array.length);
-        System.out.println(Arrays.stream(array).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
+        System.out.println(Arrays.stream(array)
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(" ")));
     }
 
     private static void mergeSort(int[] array, int arrayLength) {
