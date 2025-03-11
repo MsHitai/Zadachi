@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import seventh.sprint.BankAccountTask.BankAccount;
+import ya.java_course.sprints.seventh.BankAccountTask.BankAccount;
 
 class BankAccountTest {
 

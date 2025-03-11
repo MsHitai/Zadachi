@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import seventh.sprint.FortuneCookie.FortuneConfig;
+import ya.java_course.sprints.seventh.FortuneCookie.FortuneConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 

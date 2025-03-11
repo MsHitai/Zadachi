@@ -3,6 +3,10 @@ package fourteenth.sprint;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import ya.java_course.sprints.fourteen.sprint.AuthorService;
+import ya.java_course.sprints.fourteen.sprint.BookDao;
+import ya.java_course.sprints.fourteen.BookService;
+import ya.java_course.sprints.fourteen.sprint.DataNotAvailableException;
 
 import java.util.Arrays;
 import java.util.List;

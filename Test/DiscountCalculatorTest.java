@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import seventh.sprint.testCalculator.DiscountCalculator;
+import ya.java_course.sprints.seventh.testCalculator.DiscountCalculator;
 
 
 class DiscountCalculatorTest {

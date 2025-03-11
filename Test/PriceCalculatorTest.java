@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import seventh.sprint.PriceCalculator.PriceCalculator;
-import seventh.sprint.PriceCalculator.TransportType;
+import ya.java_course.sprints.seventh.PriceCalculator.PriceCalculator;
+import ya.java_course.sprints.seventh.PriceCalculator.TransportType;
 
 import static org.junit.jupiter.api.Assertions.*;
 

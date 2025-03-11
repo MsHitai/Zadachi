@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seventh.sprint.FortuneCookie.FortuneConfig;
-import seventh.sprint.FortuneCookie.FortuneCookieFactory;
+import ya.java_course.sprints.seventh.FortuneCookie.FortuneConfig;
+import ya.java_course.sprints.seventh.FortuneCookie.FortuneCookieFactory;
 
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.*;
