@@ -1,19 +1,36 @@
 package ya.algorithm_course.first_sprint;
 
+// <template>
+class Node<V> {
+    public V value;
+    public Node<V> next;
+
+    public Node(V value, Node<V> next) {
+        this.value = value;
+        this.next = next;
+    }
+}
+// <template>
+
 public class TestTheory {
+    public static void solution(Node<String> head) {
+        // Your code
+        // ヽ(´▽`)/
+        System.out.println(head.value);
+    }
 
-    public static void main(String[] args) {
-        int[] visitors = {0, 2, 3, 2, 0, 4, 1, 1, 2};
-        int[] entriesByVisitor = new int[5];
-        int bestVisitor = 0;
-
-        for (int visitor : visitors) {
-            entriesByVisitor[visitor]++;
-            if (entriesByVisitor[visitor] > entriesByVisitor[bestVisitor]) {
-                bestVisitor = visitor;
-            }
-        }
-
-        System.out.println(bestVisitor);
+    private static void test() {
+        Node<String> node3 = new Node<>("node3", null);
+        Node<String> node2 = new Node<>("node2", node3);
+        Node<String> node1 = new Node<>("node1", node2);
+        Node<String> node0 = new Node<>("node0", node1);
+        solution(node0);
+        /*
+        Output is:
+        node0
+        node1
+        node2
+        node3
+        */
     }
 }
