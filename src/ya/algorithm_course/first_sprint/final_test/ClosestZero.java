@@ -29,50 +29,26 @@ public class ClosestZero {
 
     private static List<Integer> findTheClosestZero(int[] houses) {
         List<Integer> result = new ArrayList<>(houses.length);
-        int left = getFirstLeftZeroIndex(houses);
-        int right = getFirstRightZeroIndex(houses);
-        boolean leftEqualsRight = left == right;
+        int zeroIndex = Integer.MAX_VALUE;
         int difference;
         for (int i = 0; i < houses.length; i++) {
-            if (houses[i] == 0 && i != left) {
-                left = i;
+            if (houses[i] == 0) {
+                zeroIndex = i;
             }
-            difference = Math.abs(i - left);
+            difference = Math.abs(i - zeroIndex);
             result.add(difference);
         }
 
-        if (leftEqualsRight) {
-            return result;
-        }
-
         for (int i = houses.length - 1; i >= 0; i--) {
-            if (houses[i] == 0 && i != right) {
-                right = i;
+            if (houses[i] == 0) {
+                zeroIndex = i;
             }
-            difference = Math.abs(i - right);
+            difference = Math.abs(i - zeroIndex);
             if (result.get(i) > difference) {
                 result.set(i, difference);
             }
         }
 
         return result;
-    }
-
-    private static int getFirstRightZeroIndex(int[] houses) {
-        for (int i = houses.length - 1; i >= 0; i--) {
-            if (houses[i] == 0) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private static int getFirstLeftZeroIndex(int[] houses) {
-        for (int i = 0; i < houses.length; i++) {
-            if (houses[i] == 0) {
-                return i;
-            }
-        }
-        return -1;
     }
 }
