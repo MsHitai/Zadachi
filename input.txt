@@ -1,6 +1,11 @@
-4
-3
-1 2 3
-0 2 6
-7 4 1
-2 7 0
+10
+put -68
+get
+get
+size
+size
+size
+put -63
+put 46
+get
+size

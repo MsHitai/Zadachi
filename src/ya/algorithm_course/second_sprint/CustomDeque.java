@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * <a href="https://contest.yandex.ru/contest/22781/run-report/135450040/">...</a>
+ * <a href="https://contest.yandex.ru/contest/22781/run-report/135503314/">...</a>
  */
 
 /**
@@ -40,6 +40,13 @@ import java.io.IOException;
  * -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
  * Операция добавления в массив и чтения записи константная = О(1). Передвижение самого указателя также О(1), так как
  * мы не двигаем все значения влево, либо вправо. Итоговая сложность операций дека О(1). Чтение и проход по командам за O(n)
+
+ * -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
+ * Переменные, хранящие индексы хвоста, головы, размера и максимального размера являются типа int, то есть занимают фиксированное
+ * значение памяти - каждый по 4 байта. Другими словами, значения не зависят от входных данных. Но размер массива items
+ * напрямую зависит от входных данных, какой размер пользователь введет, такого размера и будет выделен кусок в памяти.
+ * То есть размер items линейно зависит от входных данных O(n), где n - это maxSize. Так как это максимальная величина
+ * на что тратится память, можно сказать, что пространственная сложность = O(n).
  */
 public class CustomDeque {
 
@@ -63,7 +70,7 @@ public class CustomDeque {
             items[head] = item;
             size++;
         } else {
-            System.out.println("error");
+            throw new RuntimeException();
         }
     }
 
@@ -73,7 +80,7 @@ public class CustomDeque {
             tail = (tail + 1) % maxSize;
             size++;
         } else {
-            System.out.println("error");
+            throw new RuntimeException();
         }
     }
 
@@ -83,7 +90,7 @@ public class CustomDeque {
 
     public Integer popFront() {
         if (isEmpty()) {
-            return null;
+            throw new RuntimeException();
         }
         Integer result = items[head];
         items[head] = null;
@@ -94,7 +101,7 @@ public class CustomDeque {
 
     public Integer popBack() {
         if (isEmpty()) {
-            return null;
+            throw new RuntimeException();
         }
         tail = (tail - 1 + maxSize) % maxSize;
         Integer result = items[tail];
@@ -125,25 +132,57 @@ public class CustomDeque {
             if (command.startsWith("push_back")) {
                 split = command.split(" ");
                 temp = Integer.parseInt(split[1]);
-                deque.pushBack(temp);
+                pushBack(deque, temp);
             } else if (command.startsWith("push_front")) {
                 split = command.split(" ");
                 temp = Integer.parseInt(split[1]);
-                deque.pushFront(temp);
+                pushFront(deque, temp);
             } else if (command.startsWith("pop_front")) {
-                temp = deque.popFront();
+                temp = getPopFront(deque);
                 printValue(temp);
             } else {
-                temp = deque.popBack();
+                temp = getPopBack(deque);
                 printValue(temp);
             }
         }
     }
 
-    private static void printValue(Integer value) {
-        if (value == null) {
+    private static Integer getPopBack(CustomDeque deque) {
+        try {
+            return deque.popBack();
+        } catch (RuntimeException e) {
             System.out.println("error");
-        } else {
+        }
+        return null;
+    }
+
+    private static Integer getPopFront(CustomDeque deque) {
+        try {
+            return deque.popFront();
+        } catch (RuntimeException e) {
+            System.out.println("error");
+        }
+        return null;
+    }
+
+    private static void pushFront(CustomDeque deque, Integer temp) {
+        try {
+            deque.pushFront(temp);
+        } catch (RuntimeException e) {
+            System.out.println("error");
+        }
+    }
+
+    private static void pushBack(CustomDeque deque, Integer temp) {
+        try {
+            deque.pushBack(temp);
+        } catch (RuntimeException e) {
+            System.out.println("error");
+        }
+    }
+
+    private static void printValue(Integer value) {
+        if (value != null) {
             System.out.println(value);
         }
     }
