@@ -1,11 +1,1 @@
-10
-put -68
-get
-get
-size
-size
-size
-put -63
-put 46
-get
-size
+23

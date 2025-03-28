@@ -2,8 +2,13 @@ package leetcode.easy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Stack;
 
 @SuppressWarnings("unused")
 public class EasySolutions {
@@ -18,6 +23,71 @@ public class EasySolutions {
         System.out.println(findCombinations(n, k));
         System.out.println(factorial(n));
         System.out.println(findCombinationsWithRepetitions(n, k));
+    }
+
+    public List<String> letterCombinations(String digits) {
+        ArrayList<String> result = new ArrayList<>();
+        if (digits.isEmpty()) {
+            return result;
+        }
+        Map<String, String> DICT = new HashMap<>();
+        DICT.put("2", "abc");
+        DICT.put("3", "def");
+        DICT.put("4", "ghi");
+        DICT.put("5", "jkl");
+        DICT.put("6", "mno");
+        DICT.put("7", "pqrs");
+        DICT.put("8", "tuv");
+        DICT.put("9", "wxyz");
+        List<String> variations = new ArrayList<>();
+        for (String num : digits.split("")) {
+            variations.add(DICT.get(num));
+        }
+        combine(variations, "", 0, result);
+        return result;
+    }
+
+    private void combine(List<String> letters, String combine, int i, ArrayList<String> result) {
+        if (combine.length() == letters.size()) {
+            result.add(combine);
+            return;
+        }
+
+        if (i < letters.size()) {
+            String let1 = letters.get(i);
+            for (int k = 0; k < let1.length(); k++) {
+                String letter = String.valueOf(let1.charAt(k));
+                combine(letters, combine + letter, i + 1, result);
+            }
+        }
+    }
+
+    public static boolean isValid(String s) {
+        if (s.isEmpty()) {
+            return true;
+        }
+        Map<String, String> dictionary = new HashMap<>();
+        dictionary.put(")", "(");
+        dictionary.put("}", "{");
+        dictionary.put("]", "[");
+        Stack<String> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            String bracket = String.valueOf(s.charAt(i));
+            if (!dictionary.containsKey(bracket)) {
+                stack.addLast(bracket);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                String bracketInStack = stack.getLast();
+                if (bracketInStack.equals(dictionary.get(bracket))) {
+                    stack.removeLast();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
     }
 
     private static int findCombinationsWithRepetitions(int n, int k) {
