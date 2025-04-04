@@ -58,7 +58,7 @@ public class TwoBicycles {
                 left = mid + 1;
             }
         }
-        return result != -1 ? result + 1 : -1;
+        return result != -1 ? result + 1 : result;
     }
 
     public static int binarySearch(int[] arr, int x, int left, int right) {
