@@ -4,9 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
- * <a href="https://contest.yandex.ru/contest/24414/run-report/136853300/">...</a>
+ * <a href="https://contest.yandex.ru/contest/24414/run-report/137128672/">...</a>
  * <p>
  * -- ПРИНЦИП РАБОТЫ --
  * Реализация хеш-таблицы на основе массива, заданной длины, разрешающая коллизии методом цепочек. По условию задачи
@@ -78,31 +79,31 @@ public class CustomHashTable {
         return temp;
     }
 
-    private int getValueByKeyIfCollision(int key, CustomPair item) {
+    private Integer getValueByKeyIfCollision(Integer key, CustomPair item) {
         CustomPair temp = item;
         while (temp.next != null) {
-            if (temp.key == key) {
+            if (Objects.equals(temp.key, key)) {
                 return temp.value;
             }
             temp = temp.next;
         }
-        if (temp.key == key) {
+        if (Objects.equals(temp.key, key)) {
             return temp.value;
         } else {
             throw new IllegalArgumentException();
         }
     }
 
-    private int safelyDeleteIfCollision(int key, CustomPair item, int index) {
+    private Integer safelyDeleteIfCollision(Integer key, CustomPair item, int index) {
         CustomPair temp = item;
         while (temp.next != null) {
-            if (temp.key == key) {
+            if (Objects.equals(temp.key, key)) {
                 safelyDeleteIfKeyEquals(temp, index);
                 return temp.value;
             }
             temp = temp.next;
         }
-        if (temp.key == key) {
+        if (Objects.equals(temp.key, key)) {
             safelyDeleteIfKeyEquals(temp, index);
             return temp.value;
         } else {
@@ -119,25 +120,25 @@ public class CustomHashTable {
         }
     }
 
-    public int get(int key) {
+    public Integer get(Integer key) {
         int index = getIndex(key);
         if (items[index] == null) {
-            throw new IllegalArgumentException();
+            return null;
         }
-        if (items[index].key == key) {
+        if (Objects.equals(items[index].key, key)) {
             return items[index].value;
         } else {
             return getValueByKeyIfCollision(key, items[index]);
         }
     }
 
-    public int delete(int key) {
+    public Integer delete(Integer key) {
         int index = getIndex(key);
         if (items[index] == null) {
             throw new IllegalArgumentException();
         }
-        if (items[index].key == key) {
-            int value = items[index].value;
+        if (Objects.equals(items[index].key, key)) {
+            Integer value = items[index].value;
             safelyDeleteIfKeyEquals(items[index], index);
             return value;
         } else {
@@ -145,11 +146,11 @@ public class CustomHashTable {
         }
     }
 
-    public void put(int key, int value) {
+    public void put(Integer key, Integer value) {
         int index = getIndex(key);
         if (items[index] != null) {
             CustomPair item = items[index];
-            if (item.key == key) {
+            if (Objects.equals(item.key, key)) {
                 item.value = value;
             } else {
                 if (item.next == null) {
@@ -179,8 +180,8 @@ public class CustomHashTable {
     }
 
     private static void processCommands(String[] commands, CustomHashTable table) {
-        int key;
-        int value;
+        Integer key;
+        Integer value;
         String[] split;
         for (String command : commands) {
             try {
@@ -197,8 +198,7 @@ public class CustomHashTable {
                 } else {
                     split = command.split(" ");
                     key = Integer.parseInt(split[1]);
-                    value = table.get(key);
-                    System.out.println(value);
+                    printValue(table.get(key));
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("None");
@@ -206,13 +206,21 @@ public class CustomHashTable {
         }
     }
 
+    private static void printValue(Integer value) {
+        if (value == null) {
+            System.out.println("None");
+        } else {
+            System.out.println(value);
+        }
+    }
+
     public static class CustomPair {
-        int key;
-        int value;
+        Integer key;
+        Integer value;
 
         CustomPair next;
 
-        public CustomPair(int key, int value) {
+        public CustomPair(Integer key, Integer value) {
             this.key = key;
             this.value = value;
             next = null;
