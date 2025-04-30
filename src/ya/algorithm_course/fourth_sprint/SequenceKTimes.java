@@ -14,8 +14,7 @@ public class SequenceKTimes {
             int goalLength = Integer.parseInt(line[0]);
             int kTimes = Integer.parseInt(line[1]);
             String input = reader.readLine();
-            String result = findIndexesOfCommonSubstrings(input, goalLength, kTimes);
-            System.out.println(!result.isEmpty() ? result : 0);
+            System.out.println(findIndexesOfCommonSubstrings(input, goalLength, kTimes));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -27,19 +26,21 @@ public class SequenceKTimes {
         int base = 345;
         long modulus = 5608713984039443L;
         int n = input.length();
-        long hash = getPolynominalHash(input.substring(0, goalLength), base, modulus);
-        long power = (long) Math.pow(base, goalLength) % modulus;
+        String temp = input.substring(0, goalLength);
+        long hash = 0;
+        long power = 1;
+        for (int i = 0; i < temp.length(); i++) {
+            hash = (hash * base + temp.charAt(i)) % modulus;
+            power = (power * base) % modulus;
+        }
         Count first = new Count(1, 0);
         counts.put(hash, first);
 
         for (int i = 1; i < n; i++) {
             if (i + goalLength < n) {
-                hash = (hash - (input.charAt(i - 1) * power)) * base + (input.charAt(i + goalLength - 1));
-                if (hash < 0) {
-                    hash = (hash + modulus) % modulus;
-                } else {
-                    hash = hash % modulus;
-                }
+                long substruct = (input.charAt(i - 1) * power) % modulus;
+                long left = Math.abs(hash - substruct);
+                hash = (left * base + (input.charAt(i + goalLength - 1))) % modulus;
                 if (!counts.containsKey(hash)) {
                     Count count = new Count(1, i);
                     counts.put(hash, count);
@@ -48,7 +49,6 @@ public class SequenceKTimes {
                     count.count++;
                 }
             }
-
         }
 
         for (Long h : counts.keySet()) {
@@ -58,20 +58,6 @@ public class SequenceKTimes {
         }
 
         return sb.toString();
-    }
-
-    private static long getPolynominalHash(String value, int base, long module) {
-        long hash = 0;
-        if (value.isEmpty()) {
-            return hash;
-        }
-        int current;
-        for (int i = 0; i < value.length(); i++) {
-            current = value.charAt(i);
-            hash = (hash * base + current) % module;
-        }
-
-        return hash;
     }
 
     public static class Count {
