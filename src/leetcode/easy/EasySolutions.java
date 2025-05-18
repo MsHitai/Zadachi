@@ -1,28 +1,17 @@
 package leetcode.easy;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class EasySolutions {
 
     public static void main(String[] args) throws FileNotFoundException {
-        int[] digits_10 = new int[]{9};
-        System.out.println(Arrays.toString(plusOneShort(digits_10)));
-
-        Scanner scanner = new Scanner(new File("input.txt"));
-        int n = scanner.nextInt();
-        int k = scanner.nextInt();
-        System.out.println(findCombinations(n, k));
-        System.out.println(factorial(n));
-        System.out.println(findCombinationsWithRepetitions(n, k));
+        int[] nums = new int[]{0, 1, 0, 3, 12};
+        int[] nums1 = new int[]{4, 2, 4, 0, 0, 3, 0, 5, 1, 0};
+        int[] nums2 = new int[]{0, 0};
+        moveZeroes(nums1);
+        System.out.println(Arrays.toString(nums1));
     }
 
     public List<String> letterCombinations(String digits) {
@@ -174,5 +163,26 @@ public class EasySolutions {
             j++;
         }
         return result;
+    }
+
+    public static void moveZeroes(int[] nums) {
+        if (nums.length <= 1) {
+            return;
+        }
+        int j = 1;
+        int temp;
+        for (int i = 0; i < nums.length; i++) {
+            if (j < nums.length && nums[i] == 0) {
+                temp = nums[i];
+                while (j < nums.length && nums[j] == 0) {
+                    j++;
+                }
+                if (j < nums.length) {
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                    j++;
+                }
+            }
+        }
     }
 }
