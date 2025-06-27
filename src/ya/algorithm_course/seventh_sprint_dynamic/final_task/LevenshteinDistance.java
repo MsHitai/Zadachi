@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * <a href="https://contest.yandex.ru/contest/25597/run-report/139448029/">...</a>
+ * <a href="https://contest.yandex.ru/contest/25597/run-report/139547411/">...</a>
  * /**
  * -- ПРИНЦИП РАБОТЫ --
  * По условию задачи для двух слов, чтобы измерить между ними расстояние (количество операций, которые мы можем провести,
@@ -30,12 +30,13 @@ import java.io.IOException;
  * <p>
  * -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
  * Итоговая сложность алгоритма составляет O (n * m) - длина первого слова + 1, умноженная на длину второго слова + 1.
- * Все остальные операции (считывание данных, разбивка слов на стринговые массивы, заполнение первой строки и первой
- * колонки составляет O(k), где k - количество символов, что является меньше, чем O (n * m).
+ * Все остальные операции (считывание данных и заполнение первой строки составляет O(k), где k - количество символов,
+ * что является меньше, чем O (n * m)).
  * <p>
  * -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
- * Размер dp O ((n + 1) * (m + 1)), два массива для двух слов O (n) и O (m), разбитые по-буквенно и одна переменная для
- * хранения значения минимума. Итоговая пространственная сложность будет O (n * m).
+ * После оптимизации, в результате у нас 2 одномерных массива O(m), где m - длина второго слова + 1. Также, для оптимизации
+ * я отказалась от разбивки слова на массивы, заменив сравнение по char и == вместо сравнение строки с equals. Итоговая
+ * пространственная сложность O(m) + O(m) = 2 O(m) = O(m) (опуская константы).
  */
 public class LevenshteinDistance {
 
@@ -43,33 +44,40 @@ public class LevenshteinDistance {
         try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
             String first = reader.readLine();
             String second = reader.readLine();
-            System.out.println(findMaxLevenshteinDistance(first.split(""), second.split("")));
+            System.out.println(findMaxLevenshteinDistance(first, second));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static int findMaxLevenshteinDistance(String[] first, String[] second) {
-        int[][] dp = new int[first.length + 1][second.length + 1];
-        for (int i = 0; i <= first.length; i++) {
-            dp[i][0] = i;
-        }
-        for (int i = 0; i <= second.length; i++) {
-            dp[0][i] = i;
-        }
-        int min;
+    private static int findMaxLevenshteinDistance(String first, String second) {
+        int m = first.length();
+        int n = second.length();
+        int[] prev = new int[n + 1];
+        int[] cur = new int[n + 1];
 
-        for (int i = 1; i <= first.length; i++) {
-            for (int j = 1; j <= second.length; j++) {
-                min = Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
-                if (first[i - 1].equals(second[j - 1])) {
-                    dp[i][j] = dp[i - 1][j - 1];
+        for (int j = 0; j <= n; j++) {
+            prev[j] = j;
+        }
+
+        for (int i = 1; i <= m; i++) {
+            cur[0] = i;
+            for (int j = 1; j <= n; j++) {
+                if (first.charAt(i - 1) == second.charAt(j - 1)) {
+                    cur[j] = prev[j - 1];
                 } else {
-                    dp[i][j] = min + 1;
+                    cur[j] = Math.min(
+                            Math.min(prev[j - 1] + 1, prev[j] + 1),
+                            cur[j - 1] + 1
+                    );
                 }
             }
+
+            int[] temp = prev;
+            prev = cur;
+            cur = temp;
         }
 
-        return dp[first.length][second.length];
+        return prev[n];
     }
 }
