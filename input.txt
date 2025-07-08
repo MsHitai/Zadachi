@@ -1,3 +1,5 @@
-2
-2[r2[t]]
-rtt
+abacaba
+3
+abac
+caba
+aba
