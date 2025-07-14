@@ -10,8 +10,12 @@ public class EasySolutions {
         int[] nums = new int[]{0, 1, 0, 3, 12};
         int[] nums1 = new int[]{4, 2, 4, 0, 0, 3, 0, 5, 1, 0};
         int[] nums2 = new int[]{0, 0};
+        moveZeroes(nums);
         moveZeroes(nums1);
-        System.out.println(Arrays.toString(nums1));
+        moveZeroes(nums2);
+        System.out.println(Arrays.toString(nums));
+        System.out.println(Arrays.toString(nums1));//doesn't pass yet
+        System.out.println(Arrays.toString(nums2));
     }
 
     public List<String> letterCombinations(String digits) {
@@ -184,5 +188,36 @@ public class EasySolutions {
                 }
             }
         }
+    }
+
+    /**
+     * A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all
+     * non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+     *
+     * @param s input
+     * @return true, if valid
+     */
+    public static boolean isPalindrome(String s) {
+        if (s.isEmpty()) {
+            return true;
+        }
+        int start = 0;
+        int last = s.length() - 1;
+        while(start <= last) {
+            char currFirst = s.charAt(start);
+            char currLast = s.charAt(last);
+            if (!Character.isLetterOrDigit(currFirst )) {
+                start++;
+            } else if(!Character.isLetterOrDigit(currLast)) {
+                last--;
+            } else {
+                if (Character.toLowerCase(currFirst) != Character.toLowerCase(currLast)) {
+                    return false;
+                }
+                start++;
+                last--;
+            }
+        }
+        return true;
     }
 }
