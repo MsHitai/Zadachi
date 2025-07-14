@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * <a href="https://contest.yandex.ru/contest/26133/run-report/139954891/">...</a>
+ * <a href="https://contest.yandex.ru/contest/26133/run-report/139998966/">...</a>
  * /**
  * -- ПРИНЦИП РАБОТЫ --
  * После оптимизации для определения общего префикса, берем первую строку, как префикс, и уменьшаем его при несовпадении
@@ -41,13 +41,14 @@ import java.util.Stack;
  * -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
  * Поиск общего префикса составляет O(m * L), где m - длина списка слов, а L - длина самого длинного слова. В методе
  * распаковки сначала идем по списку всех слов, а потом посимвольно считываем слово, распаковывая его. Этот метод
- * составит O (m * k), где m - длина списка слов, а k - длина полностью распакованной строки.
+ * составит O (m * L), где m - длина списка слов, а L - длина полностью распакованной строки.
  * Итоговая сложность алгоритма поиска общего префикса с распаковкой составляет
- * O(m * L) + O(n) + O (m * k).
+ * O(m * L) + O(n) + O (m * L).
  * <p>
  * -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
  * Мы храним два стека, промежуточные переменные. Самая большая память уходит на список
- * result, где мы храним распакованные строки и это будет O (m), где m - длина списка слов.
+ * result, где мы храним распакованные строки и это будет O (m * k), где m - длина списка слов, а k - длина распакованной
+ * строки.
  */
 public class PackedPrefix {
 
@@ -105,18 +106,21 @@ public class PackedPrefix {
             return "";
         }
         String prefix = words.getFirst();
+        int prefixLength = prefix.length();
 
         for (int i = 1; i < words.size(); i++) {
-            while (!words.get(i).startsWith(prefix)) {
-                prefix = prefix.substring(0, prefix.length() - 1);
-
-                if (prefix.isEmpty()) {
-                    return "";
-                }
+            String current = words.get(i);
+            int j = 0;
+            while (j < prefixLength && j < current.length() && current.charAt(j) == prefix.charAt(j)) {
+                j++;
+            }
+            prefixLength = Math.min(prefixLength, j);
+            if (prefixLength == 0) {
+                return "";
             }
         }
 
-        return prefix;
+        return prefix.substring(0, prefixLength);
     }
 
     static class Element {
