@@ -7,14 +7,21 @@ import java.util.*;
 public class EasySolutions {
 
     public static void main(String[] args) throws FileNotFoundException {
-        int[] nums = new int[]{0, 1, 0, 3, 12};
-        int[] nums1 = new int[]{4, 2, 4, 0, 0, 3, 0, 5, 1, 0};
-        int[] nums2 = new int[]{0, 0};
-        moveZeroes(nums);
+        int[] nums = new int[]{1, 1, 1, 2, 2, 3};
+        int[] nums1 = new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+        int[] nums2 = new int[]{0, 0, 1, 1, 1, 1, 2, 3, 3};
+        /*moveZeroes(nums);
         moveZeroes(nums1);
         moveZeroes(nums2);
         System.out.println(Arrays.toString(nums));
         System.out.println(Arrays.toString(nums1));//doesn't pass yet
+        System.out.println(Arrays.toString(nums2));*/
+        System.out.println(removeDuplicatesAllowTwo(nums));
+        System.out.println(removeDuplicatesAllowTwo(nums1));
+        System.out.println(removeDuplicatesAllowTwo(nums2));
+
+        System.out.println(Arrays.toString(nums));
+        System.out.println(Arrays.toString(nums1));
         System.out.println(Arrays.toString(nums2));
     }
 
@@ -203,12 +210,12 @@ public class EasySolutions {
         }
         int start = 0;
         int last = s.length() - 1;
-        while(start <= last) {
+        while (start <= last) {
             char currFirst = s.charAt(start);
             char currLast = s.charAt(last);
-            if (!Character.isLetterOrDigit(currFirst )) {
+            if (!Character.isLetterOrDigit(currFirst)) {
                 start++;
-            } else if(!Character.isLetterOrDigit(currLast)) {
+            } else if (!Character.isLetterOrDigit(currLast)) {
                 last--;
             } else {
                 if (Character.toLowerCase(currFirst) != Character.toLowerCase(currLast)) {
@@ -219,5 +226,66 @@ public class EasySolutions {
             }
         }
         return true;
+    }
+
+    /**
+     * Merge nums1 and nums2 into a single array sorted in non-decreasing order
+     */
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        int[] copy = new int[m];
+        System.arraycopy(nums1, 0, copy, 0, m);
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while (i < m && j < n) {
+            if (copy[i] <= nums2[j]) {
+                nums1[k++] = copy[i++];
+            } else {
+                nums1[k++] = nums2[j++];
+            }
+        }
+
+        while (i < m) {
+            nums1[k++] = copy[i++];
+        }
+        while (j < n) {
+            nums1[k++] = nums2[j++];
+        }
+    }
+
+    /**
+     * Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique
+     * element appears only once.
+     */
+    public static int removeDuplicates(int[] nums) {
+        int j = 0;
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[j]) {
+                nums[++j] = nums[i];
+            }
+        }
+
+        return j + 1;
+    }
+
+    /**
+     * Given an integer array nums sorted in non-decreasing order, remove some duplicates in-place such that each unique
+     * element appears at most twice.
+     */
+    public static int removeDuplicatesAllowTwo(int[] nums) {
+        if (nums.length <= 2) {
+            return nums.length;
+        }
+        int j = 2;
+
+        for (int i = 2; i < nums.length; i++) {
+            if (nums[i] != nums[j - 2]) {
+                nums[j++] = nums[i];
+            }
+        }
+
+        return j;
     }
 }
