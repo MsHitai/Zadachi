@@ -7,9 +7,9 @@ import java.util.*;
 public class EasySolutions {
 
     public static void main(String[] args) throws FileNotFoundException {
-        int[] nums = new int[]{1, 1, 1, 2, 2, 3};
-        int[] nums1 = new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
-        int[] nums2 = new int[]{0, 0, 1, 1, 1, 1, 2, 3, 3};
+        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7};
+        int[] nums1 = new int[]{-1, -100, 3, 99};
+        int[] nums2 = new int[]{3, 2, 3};
         /*moveZeroes(nums);
         moveZeroes(nums1);
         moveZeroes(nums2);
@@ -22,7 +22,6 @@ public class EasySolutions {
 
         System.out.println(Arrays.toString(nums));
         System.out.println(Arrays.toString(nums1));
-        System.out.println(Arrays.toString(nums2));
     }
 
     public List<String> letterCombinations(String digits) {
@@ -287,5 +286,29 @@ public class EasySolutions {
         }
 
         return j;
+    }
+
+    /**
+     * Given an array nums of size n, return the majority element.
+     */
+    public static int majorityElement(int[] nums) {
+        if (nums.length < 2) {
+            return nums[0];
+        }
+        Map<Integer, Integer> counts = new HashMap<>();
+        int minCount = nums.length / 2;
+        int result = -1;
+        int count = 0;
+
+        for (int num : nums) {
+            counts.put(num, counts.getOrDefault(num, 0) + 1);
+
+            if (counts.get(num) >= minCount && counts.get(num) > count) {
+                result = num;
+                count = counts.get(num);
+            }
+        }
+
+        return result;
     }
 }

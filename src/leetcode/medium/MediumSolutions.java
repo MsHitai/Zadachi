@@ -1,23 +1,41 @@
 package leetcode.medium;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
+@SuppressWarnings("unused")
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        ListNode head = new ListNode(18, new ListNode(6, new ListNode(10, new ListNode(3, null))));
-        ListNode head2 = new ListNode(18, new ListNode(6, new ListNode(10, new ListNode(3, null))));
-        long before = System.currentTimeMillis();
-        System.out.println(before);
-        System.out.println(insertGCD(head));
-        long after = Math.abs(before - System.currentTimeMillis());
-        System.out.println(after);
+        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7};
+        int[] nums1 = new int[]{-1, -100, 3, 99};
+        int[] nums2 = new int[]{1, 2, 3};
 
-        System.out.println("faster way");
-        before = System.currentTimeMillis();
-        System.out.println(insertGreatestCommonDivisors(head2));
-        System.out.println(Math.abs(before - System.currentTimeMillis()));
+        try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+            StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
+            int[] ints = new int[5];
+            for (int i = 0; i < 5; i++) {
+                ints[i] = Integer.parseInt(tokenizer.nextToken(","));
+            }
+
+            rotate(ints, 4);
+            System.out.println(Arrays.toString(ints));
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        rotate(nums, 3);
+        rotate(nums1, 2);
+        rotate(nums2, 1);
+
+        System.out.println(Arrays.toString(nums));
+        System.out.println(Arrays.toString(nums1));
+        System.out.println(Arrays.toString(nums2));
     }
 
     public static ListNode insertGreatestCommonDivisors(ListNode head) {
@@ -38,7 +56,7 @@ public class MediumSolutions {
             temp = temp.getNext();
         }
 
-        return getNode(nodes.get(0), 1, nodes);
+        return getNode(nodes.getFirst(), 1, nodes);
     }
 
     public static ListNode getNode(ListNode node, int index, List<ListNode> nodes) {
@@ -82,5 +100,31 @@ public class MediumSolutions {
             next = next.getNext();
         }
         return head;
+    }
+
+    /**
+     * Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+     */
+    public static void rotate(int[] nums, int k) {
+        k = k % nums.length;
+        if (k == 0) {
+            return;
+        }
+
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
+
+    private static void reverse(int[] nums, int start, int end) {
+        int temp;
+        while (start < end) {
+            temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+
+            start++;
+            end--;
+        }
     }
 }
