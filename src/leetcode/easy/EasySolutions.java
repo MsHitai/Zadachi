@@ -7,21 +7,18 @@ import java.util.*;
 public class EasySolutions {
 
     public static void main(String[] args) throws FileNotFoundException {
-        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7};
-        int[] nums1 = new int[]{-1, -100, 3, 99};
-        int[] nums2 = new int[]{3, 2, 3};
+        int[] nums = new int[]{7, 1, 5, 3, 6, 4};
+        int[] nums1 = new int[]{7, 6, 4, 3, 1};
+        int[] nums2 = new int[]{1, 2};
         /*moveZeroes(nums);
         moveZeroes(nums1);
         moveZeroes(nums2);
         System.out.println(Arrays.toString(nums));
         System.out.println(Arrays.toString(nums1));//doesn't pass yet
         System.out.println(Arrays.toString(nums2));*/
-        System.out.println(removeDuplicatesAllowTwo(nums));
-        System.out.println(removeDuplicatesAllowTwo(nums1));
-        System.out.println(removeDuplicatesAllowTwo(nums2));
-
-        System.out.println(Arrays.toString(nums));
-        System.out.println(Arrays.toString(nums1));
+        System.out.println(maxProfit(nums));
+        System.out.println(maxProfit(nums1));
+        System.out.println(maxProfit(nums2));
     }
 
     public List<String> letterCombinations(String digits) {
@@ -310,5 +307,44 @@ public class EasySolutions {
         }
 
         return result;
+    }
+
+    /**
+     * You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the
+     * future to sell that stock. Return the maximum profit you can achieve from this transaction.
+     * If you cannot achieve any profit, return 0.
+     */
+    public static int maxProfit(int[] prices) {
+        int[] dp = new int[prices.length];
+        int minIndex = 0;
+
+        for (int i = 0; i < prices.length; i++) {
+            if (i + 1 < prices.length && prices[i] < prices[i + 1]) {
+                if (prices[minIndex] > prices[i]) {
+                    minIndex = i;
+                }
+            } else {
+                dp[i] = prices[i] - prices[minIndex];
+            }
+        }
+
+        OptionalInt max = Arrays.stream(dp).max();
+        if (max.isPresent()) {
+            return max.getAsInt();
+        }
+        return 0;
+    }
+
+    public static int maxProfitNoDp(int[] prices) {
+        int buy = prices[0];
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] < buy) {
+                buy = prices[i];
+            } else if (prices[i] - buy > profit) {
+                profit = prices[i] - buy;
+            }
+        }
+        return profit;
     }
 }
