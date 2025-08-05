@@ -1,22 +1,17 @@
 package leetcode.medium;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 @SuppressWarnings("unused")
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7};
-        int[] nums1 = new int[]{-1, -100, 3, 99};
-        int[] nums2 = new int[]{1, 2, 3};
+        int[] nums = new int[]{2, 3, 1, 1, 4};
+        int[] nums1 = new int[]{3, 2, 1, 0, 4};
+        int[] nums2 = new int[]{0};
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+        /*try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
             int[] ints = new int[5];
             for (int i = 0; i < 5; i++) {
@@ -27,15 +22,11 @@ public class MediumSolutions {
             System.out.println(Arrays.toString(ints));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
-        }
+        }*/
 
-        rotate(nums, 3);
-        rotate(nums1, 2);
-        rotate(nums2, 1);
-
-        System.out.println(Arrays.toString(nums));
-        System.out.println(Arrays.toString(nums1));
-        System.out.println(Arrays.toString(nums2));
+        System.out.println(canJumpNoDp(nums));
+        System.out.println(canJumpNoDp(nums1));
+        System.out.println(canJumpNoDp(nums2));
     }
 
     public static ListNode insertGreatestCommonDivisors(ListNode head) {
@@ -126,5 +117,41 @@ public class MediumSolutions {
             start++;
             end--;
         }
+    }
+
+    public static boolean canJump(int[] nums) {
+        if (nums.length < 2) {
+            return true;
+        }
+        boolean[] dp = new boolean[nums.length];
+        dp[0] = nums[0] != 0;
+        int temp;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (dp[i]) {
+                temp = 1;
+                while (temp <= nums[i] && i + temp < nums.length) {
+                    dp[i + temp] = true;
+
+                    temp++;
+                }
+            }
+        }
+
+        return dp[nums.length - 1];
+    }
+
+    /**
+     * Return true if you can reach the last index, starting from first (each value is max jump length) or false otherwise.
+     */
+    public static boolean canJumpNoDp(int[] nums) {
+        int reachable = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > reachable) {
+                return false;
+            }
+            reachable = Math.max(reachable, i + nums[i]);
+        }
+        return true;
     }
 }
