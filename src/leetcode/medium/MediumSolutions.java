@@ -7,9 +7,9 @@ import java.util.List;
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{2, 3, 1, 1, 4};
-        int[] nums1 = new int[]{3, 2, 1, 0, 4};
-        int[] nums2 = new int[]{0};
+        int[] nums = new int[]{2, 1};
+        int[] nums1 = new int[]{2, 3, 0, 1, 4};
+        int[] nums2 = new int[]{3, 2, 1, 1, 4};
 
         /*try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
@@ -24,9 +24,9 @@ public class MediumSolutions {
             throw new RuntimeException(e.getMessage());
         }*/
 
-        System.out.println(canJumpNoDp(nums));
-        System.out.println(canJumpNoDp(nums1));
-        System.out.println(canJumpNoDp(nums2));
+        System.out.println(jump(nums));
+        System.out.println(jump(nums1));
+        System.out.println(jump(nums2));
     }
 
     public static ListNode insertGreatestCommonDivisors(ListNode head) {
@@ -153,5 +153,38 @@ public class MediumSolutions {
             reachable = Math.max(reachable, i + nums[i]);
         }
         return true;
+    }
+    /**
+     * Return the minimum number of jumps to reach index n - 1. Dynamic programming
+     */
+    public static int jumpDp(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j <= nums[i] && i + j < n; j++) {
+                if (dp[i + j] == 0) {
+                    dp[i + j] = dp[i] + 1;
+                }
+            }
+        }
+        return dp[n - 1];
+    }
+    /**
+     * Return the minimum number of jumps to reach index n - 1. Greedy
+     */
+    public static int jump(int[] nums) {
+        int jumps = 0;
+        int currentEnd = 0;
+        int farthest = 0;
+
+        for (int i = 0; i < nums.length - 1; i++) {
+            farthest = Math.max(farthest, i + nums[i]);
+            if (i == currentEnd) {
+                jumps++;
+                currentEnd = farthest;
+            }
+        }
+        return jumps;
     }
 }
