@@ -1,15 +1,19 @@
 package leetcode.medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{2, 1};
-        int[] nums1 = new int[]{2, 3, 0, 1, 4};
-        int[] nums2 = new int[]{3, 2, 1, 1, 4};
+        int[] nums = new int[]{1};
+        int[] nums1 = new int[]{1, 1, 1, 1};
+        int[] nums2 = new int[]{7, 7, 7, 7};
+        int[] nums3 = new int[]{3, 0, 6, 1, 5};
+        int[] nums4 = new int[]{1, 3, 1};
+        int[] nums5 = new int[]{0, 1, 2, 3};
 
         /*try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
@@ -24,9 +28,34 @@ public class MediumSolutions {
             throw new RuntimeException(e.getMessage());
         }*/
 
-        System.out.println(jump(nums));
-        System.out.println(jump(nums1));
-        System.out.println(jump(nums2));
+        System.out.println(hIndex(nums));
+        System.out.println(hIndex(nums1));
+        System.out.println(hIndex(nums2));
+        System.out.println(hIndex(nums3));
+        System.out.println(hIndex(nums4));
+        System.out.println(hIndex(nums5));
+    }
+    /**
+     * Find h-index. The h-index is defined as the maximum value of h such that the given researcher has published
+     * at least h papers that have each been cited at least h times.
+     */
+    public static int hIndex(int[] citations) {
+        Arrays.sort(citations);
+        int[] copy = new int[citations.length];
+        int j = 0;
+        for (int i = citations.length - 1; i >= 0; i--) {
+            copy[j] = citations[i];
+            j++;
+        }
+        int ans = 0;
+
+        for (int i = 0; i < copy.length; i++) {
+            if (copy[i] >= i + 1) {
+                ans++;
+            }
+        }
+
+        return ans;
     }
 
     public static ListNode insertGreatestCommonDivisors(ListNode head) {
@@ -154,6 +183,7 @@ public class MediumSolutions {
         }
         return true;
     }
+
     /**
      * Return the minimum number of jumps to reach index n - 1. Dynamic programming
      */
@@ -170,6 +200,7 @@ public class MediumSolutions {
         }
         return dp[n - 1];
     }
+
     /**
      * Return the minimum number of jumps to reach index n - 1. Greedy
      */
