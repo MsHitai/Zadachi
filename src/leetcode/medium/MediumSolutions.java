@@ -8,11 +8,11 @@ import java.util.List;
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1};
-        int[] nums1 = new int[]{1, 1, 1, 1};
-        int[] nums2 = new int[]{7, 7, 7, 7};
-        int[] nums3 = new int[]{3, 0, 6, 1, 5};
-        int[] nums4 = new int[]{1, 3, 1};
+        int[] nums = new int[]{2, 3, 1, 2, 4, 3};
+        int[] nums1 = new int[]{1, 4, 4};
+        int[] nums2 = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
+        int[] nums3 = new int[]{5, 1, 3, 5, 10, 7, 4, 9, 2, 8};
+        int[] nums4 = new int[]{2, 3, 1, 1, 1, 1, 1};
         int[] nums5 = new int[]{0, 1, 2, 3};
 
         /*try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
@@ -28,13 +28,36 @@ public class MediumSolutions {
             throw new RuntimeException(e.getMessage());
         }*/
 
-        System.out.println(hIndex(nums));
-        System.out.println(hIndex(nums1));
-        System.out.println(hIndex(nums2));
-        System.out.println(hIndex(nums3));
-        System.out.println(hIndex(nums4));
-        System.out.println(hIndex(nums5));
+        System.out.println(minSubArrayLen(5, nums4));
+        System.out.println(minSubArrayLen(15, nums3));
+        System.out.println(minSubArrayLen(7, nums));
+        System.out.println(minSubArrayLen(4, nums1));
+        System.out.println(minSubArrayLen(11, nums2));
     }
+
+    /**
+     * Given an array of positive integers nums and a positive integer target, return the minimal length of a
+     * subarray whose sum is greater than or equal to target. If there is no such subarray, return 0 instead.
+     */
+    public static int minSubArrayLen(int target, int[] nums) {
+        int start = 0;
+        int sum = 0;
+        int bestLength = Integer.MAX_VALUE;
+
+        for (int end = 0; end < nums.length; end++) {
+            sum += nums[end];
+
+            while (sum >= target) {
+                int windowLength = end - start + 1;
+                bestLength = Math.min(bestLength, windowLength);
+                sum -= nums[start];
+                start++;
+            }
+        }
+
+        return bestLength == Integer.MAX_VALUE ? 0 : bestLength;
+    }
+
     /**
      * Find h-index. The h-index is defined as the maximum value of h such that the given researcher has published
      * at least h papers that have each been cited at least h times.

@@ -7,18 +7,49 @@ import java.util.*;
 public class EasySolutions {
 
     public static void main(String[] args) throws FileNotFoundException {
-        int[] nums = new int[]{7, 1, 5, 3, 6, 4};
-        int[] nums1 = new int[]{7, 6, 4, 3, 1};
-        int[] nums2 = new int[]{1, 2};
+        int[] nums = new int[]{1, 0, 0, 0, 1};
+        int[] nums1 = new int[]{1, 0, 0, 0, 0};
+        int[] nums2 = new int[]{0, 0, 1, 0, 1};
+        int[] nums3 = new int[] {0};
+        int[] nums4 = new int[] {0, 0};
         /*moveZeroes(nums);
         moveZeroes(nums1);
         moveZeroes(nums2);
         System.out.println(Arrays.toString(nums));
         System.out.println(Arrays.toString(nums1));//doesn't pass yet
         System.out.println(Arrays.toString(nums2));*/
-        System.out.println(maxProfit(nums));
-        System.out.println(maxProfit(nums1));
-        System.out.println(maxProfit(nums2));
+        System.out.println(canPlaceFlowers(nums4, 2));
+        System.out.println(canPlaceFlowers(nums3, 1));
+        System.out.println(canPlaceFlowers(nums1, 2));
+        System.out.println(canPlaceFlowers(nums, 1));
+        System.out.println(canPlaceFlowers(nums, 2));
+        System.out.println(canPlaceFlowers(nums2, 1));
+    }
+
+    /**
+     * Return true if n flowers can be planted. They can be planted only if there is no adjacent flowers ([0], [0,0] and [0,0,0])
+     */
+    public static boolean canPlaceFlowers(int[] flowerbed, int n) {
+        if (flowerbed.length < 2) {
+            return flowerbed[0] == 0 || n == 0;
+        }
+        int count = 0;
+        for (int i = 0; i < flowerbed.length; i++) {
+            if (i == 0) {
+                if (flowerbed[i] == 0 && flowerbed[i + 1] == 0) {
+                    count++;
+                    i++;
+                }
+                continue;
+            }
+            if (i + 1 < flowerbed.length && flowerbed[i - 1] == 0 && flowerbed[i] == 0 && flowerbed[i + 1] == 0) {
+                count++;
+                i++;
+            } else if (i + 1 >= flowerbed.length && flowerbed[i - 1] == 0 && flowerbed[i] == 0) {
+                count++;
+            }
+        }
+        return count >= n;
     }
 
     public List<String> letterCombinations(String digits) {
