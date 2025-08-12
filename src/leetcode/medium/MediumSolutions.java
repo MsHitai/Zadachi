@@ -8,12 +8,8 @@ import java.util.List;
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{2, 3, 1, 2, 4, 3};
-        int[] nums1 = new int[]{1, 4, 4};
-        int[] nums2 = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
-        int[] nums3 = new int[]{5, 1, 3, 5, 10, 7, 4, 9, 2, 8};
-        int[] nums4 = new int[]{2, 3, 1, 1, 1, 1, 1};
-        int[] nums5 = new int[]{0, 1, 2, 3};
+        int[][] nums = new int[][]{{1, 2}, {2, 5}, {4, 3}};
+        int[][] nums1 = new int[][]{{5, 2}, {5, 4}, {10, 3}, {20, 1}};
 
         /*try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
@@ -28,11 +24,49 @@ public class MediumSolutions {
             throw new RuntimeException(e.getMessage());
         }*/
 
-        System.out.println(minSubArrayLen(5, nums4));
-        System.out.println(minSubArrayLen(15, nums3));
-        System.out.println(minSubArrayLen(7, nums));
-        System.out.println(minSubArrayLen(4, nums1));
-        System.out.println(minSubArrayLen(11, nums2));
+        System.out.println(averageWaitingTimeNoList(nums1));
+        System.out.println(averageWaitingTimeNoList(nums));
+    }
+
+    public static double averageWaitingTime(int[][] customers) {
+        List<Integer> waitingTimes = new ArrayList<>();
+        int currentTime = 0;
+
+        for (int i = 0; i < customers.length; i++) {
+            int[] row = customers[i];
+            if (i == 0) {
+                currentTime += row[0] + row[1];
+            } else if (currentTime < row[0]) {
+                currentTime = row[0] + row[1];
+            } else {
+                currentTime += row[1];
+            }
+            waitingTimes.add(currentTime - row[0]);
+        }
+        double sum = waitingTimes.stream().mapToDouble(n -> n).sum();
+
+        return sum / waitingTimes.size();
+    }
+
+    /**
+     * Arrival time and service time is given in the arrays. Return the average waiting time of all customers.
+     */
+    public static double averageWaitingTimeNoList(int[][] customers) {
+        double totalWaitingTime = 0;
+        int currentTime = 0;
+
+        for (int[] customer : customers) {
+            int arrival = customer[0];
+            int service = customer[1];
+            if (currentTime < arrival) {
+                currentTime = arrival;
+            }
+            int waiting_time = currentTime - arrival + service;
+            totalWaitingTime += waiting_time;
+            currentTime += service;
+        }
+
+        return totalWaitingTime / customers.length;
     }
 
     /**
