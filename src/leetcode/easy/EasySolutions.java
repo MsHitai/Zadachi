@@ -394,4 +394,20 @@ public class EasySolutions {
         }
         return count;
     }
+
+    /**
+     * Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+     */
+    private static int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> complements = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            int complement = target - num;
+            if (complements.containsKey(complement)) {
+                return new int[]{i, complements.get(complement)};
+            }
+            complements.put(num, i);
+        }
+        return null;
+    }
 }
