@@ -6,6 +6,14 @@ import java.util.concurrent.Executors;
 
 public class CountDownLatchSample {
 
+    private Object monitor;
+    private int value;
+
+    public CountDownLatchSample(Object monitor) {
+        this.monitor = monitor;
+        value = 0;
+    }
+
     public static void main(String[] args) {
 
         ExecutorService executorService = Executors.newFixedThreadPool(5);
@@ -39,5 +47,12 @@ public class CountDownLatchSample {
 
         ExecutorService executor = Executors.newCachedThreadPool(); // создает потоки по мере необходимости,
         // пул не уменьшается, может привезти к утечке ресурсов
+    }
+
+    public int getAndIncrement() {
+        synchronized (monitor) {
+            value++;
+        }
+        return value;
     }
 }

@@ -1,15 +1,11 @@
-package fourteenth.sprint;
+package ya.java_course.sprints.fourteen;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ya.java_course.sprints.fourteen.sprint.BookServiceDuplicate;
-import ya.java_course.sprints.fourteen.sprint.CustomerService;
-import ya.java_course.sprints.fourteen.sprint.OrderDao;
-import ya.java_course.sprints.fourteen.OrderService;
 
 import java.time.LocalDate;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyInt;
 
 class OrderServiceTest {
 
@@ -33,7 +29,7 @@ class OrderServiceTest {
         orderService.saveOrder(2, 5, 1, orderDate);
 
         Mockito.verify(orderDao, Mockito.times(1))
-                .saveOrder(2, "адрес", 5,1, deliveryDate);
+                .saveOrder(2, "адрес", 5, 1, deliveryDate);
         Mockito.verify(bookService, Mockito.times(1))
                 .decreaseBookAvailableAmount(5, 1);
         Mockito.verify(customerService, Mockito.atLeast(1))
