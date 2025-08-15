@@ -12,18 +12,20 @@ public class EasySolutions {
         int[] nums2 = new int[]{0, 0, 1, 0, 1};
         int[] nums3 = new int[] {0};
         int[] nums4 = new int[] {0, 0};
-        /*moveZeroes(nums);
-        moveZeroes(nums1);
-        moveZeroes(nums2);
-        System.out.println(Arrays.toString(nums));
-        System.out.println(Arrays.toString(nums1));//doesn't pass yet
-        System.out.println(Arrays.toString(nums2));*/
+
         System.out.println(canPlaceFlowers(nums4, 2));
         System.out.println(canPlaceFlowers(nums3, 1));
         System.out.println(canPlaceFlowers(nums1, 2));
         System.out.println(canPlaceFlowers(nums, 1));
         System.out.println(canPlaceFlowers(nums, 2));
         System.out.println(canPlaceFlowers(nums2, 1));
+    }
+
+    public static int strStr(String haystack, String needle) {
+        if (haystack.contains(needle)) {
+            return haystack.indexOf(needle);
+        }
+        return -1;
     }
 
     /**
