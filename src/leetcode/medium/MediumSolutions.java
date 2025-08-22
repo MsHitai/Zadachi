@@ -8,8 +8,10 @@ import java.util.List;
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int[][] nums = new int[][]{{1, 2}, {2, 5}, {4, 3}};
-        int[][] nums1 = new int[][]{{5, 2}, {5, 4}, {10, 3}, {20, 1}};
+        int[] gas = new int[]{1, 2, 3, 4, 5};
+        int[] cost = new int[]{3, 4, 5, 1, 2};
+        int[] gas2 = new int[]{5, 1, 2, 3, 4};
+        int[] cost2 = new int[]{4, 4, 1, 5, 1};
 
         /*try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
@@ -24,8 +26,29 @@ public class MediumSolutions {
             throw new RuntimeException(e.getMessage());
         }*/
 
-        System.out.println(averageWaitingTimeNoList(nums1));
-        System.out.println(averageWaitingTimeNoList(nums));
+        System.out.println(canCompleteCircuit(gas2, cost2));
+        System.out.println(canCompleteCircuit(gas, cost));
+    }
+
+    /**
+     * Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the
+     * circuit once in the clockwise direction, otherwise return -1.
+     */
+    public static int canCompleteCircuit(int[] gas, int[] cost) {
+        int totalDif = 0;
+        int tank = 0;
+        int start = 0;
+
+        for (int i = 0; i < cost.length; i++) {
+            totalDif += gas[i] - cost[i];
+            tank += gas[i] - cost[i];
+            if (tank < 0) {
+                tank = 0;
+                start = i + 1;
+            }
+        }
+
+        return totalDif >= 0 ? start : -1;
     }
 
     public static double averageWaitingTime(int[][] customers) {
