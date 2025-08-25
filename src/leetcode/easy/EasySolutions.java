@@ -7,18 +7,14 @@ import java.util.*;
 public class EasySolutions {
 
     public static void main(String[] args) throws FileNotFoundException {
-        int[] nums = new int[]{1, 0, 0, 0, 1};
-        int[] nums1 = new int[]{1, 0, 0, 0, 0};
-        int[] nums2 = new int[]{0, 0, 1, 0, 1};
-        int[] nums3 = new int[] {0};
-        int[] nums4 = new int[] {0, 0};
+        int[] nums = new int[]{0, 1, 0, 0, 0, 3, 12};
+        int[] nums3 = new int[]{1, 3, 12, 0, 0, 0, 0, 1};
 
-        System.out.println(canPlaceFlowers(nums4, 2));
-        System.out.println(canPlaceFlowers(nums3, 1));
-        System.out.println(canPlaceFlowers(nums1, 2));
-        System.out.println(canPlaceFlowers(nums, 1));
-        System.out.println(canPlaceFlowers(nums, 2));
-        System.out.println(canPlaceFlowers(nums2, 1));
+        moveZeroes(nums3);
+        moveZeroes(nums);
+
+        System.out.println(Arrays.toString(nums));
+        System.out.println(Arrays.toString(nums3));
     }
 
     public static int strStr(String haystack, String needle) {
@@ -205,23 +201,22 @@ public class EasySolutions {
         return result;
     }
 
+    /**
+     * Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the
+     * non-zero elements.
+     */
     public static void moveZeroes(int[] nums) {
         if (nums.length <= 1) {
             return;
         }
-        int j = 1;
+        int nonZeroIndex = 0;
         int temp;
-        for (int i = 0; i < nums.length; i++) {
-            if (j < nums.length && nums[i] == 0) {
-                temp = nums[i];
-                while (j < nums.length && nums[j] == 0) {
-                    j++;
-                }
-                if (j < nums.length) {
-                    nums[i] = nums[j];
-                    nums[j] = temp;
-                    j++;
-                }
+        for (int current = 0; current < nums.length; current++) {
+            if (nums[current] != 0) {
+                temp = nums[current];
+                nums[current] = nums[nonZeroIndex];
+                nums[nonZeroIndex] = temp;
+                nonZeroIndex++;
             }
         }
     }
