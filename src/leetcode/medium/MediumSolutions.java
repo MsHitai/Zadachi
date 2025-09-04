@@ -1,33 +1,24 @@
 package leetcode.medium;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int[] gas = new int[]{1, 2, 3, 4, 5};
-        int[] cost = new int[]{3, 4, 5, 1, 2};
-        int[] gas2 = new int[]{5, 1, 2, 3, 4};
-        int[] cost2 = new int[]{4, 4, 1, 5, 1};
+        int[] nums = new int[]{1, 2, 3, 4};
+        int[] nums6 = new int[]{2, 3, 0, 0};
+        int[] nums5 = new int[]{0, 4, 0};
+        int[] nums2 = new int[]{-1, 1, 0, -3, 3};
+        int[] nums3 = new int[]{1, 2, 3, 4, 5};
+        int[] nums4 = new int[]{5, 1, 2, 3, 4};
 
-        /*try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
-            StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
-            int[] ints = new int[5];
-            for (int i = 0; i < 5; i++) {
-                ints[i] = Integer.parseInt(tokenizer.nextToken(","));
-            }
-
-            rotate(ints, 4);
-            System.out.println(Arrays.toString(ints));
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }*/
-
-        System.out.println(canCompleteCircuit(gas2, cost2));
-        System.out.println(canCompleteCircuit(gas, cost));
+        System.out.println(Arrays.toString(productExceptSelf(nums5)));//[0,0,0]
+        System.out.println(Arrays.toString(productExceptSelf(nums6)));//[0,0,0]
+        System.out.println(Arrays.toString(productExceptSelf(nums2)));//[0,0,9,0,0]
+        System.out.println(Arrays.toString(productExceptSelf(nums)));//[24,12,8,6]
+        System.out.println(Arrays.toString(productExceptSelf(nums3)));//[120,60,40,30,24]
+        System.out.println(Arrays.toString(productExceptSelf(nums4)));//[24,120,60,40,30]
     }
 
     /**
@@ -49,6 +40,45 @@ public class MediumSolutions {
         }
 
         return totalDif >= 0 ? start : -1;
+    }
+
+    /**
+     * Given an integer array nums, return an array answer such that answer[i] is equal to the product of all
+     * the elements of nums except nums[i].
+     */
+    public static int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] answer = new int[n];
+        if (Arrays.equals(nums, answer)) {
+            return answer;
+        }
+        int multiplyAll = 1;
+        boolean hasZero = false;
+        boolean hasNonZero;
+        int countNonZero = 0;
+        Set<Integer> indexZero = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (num == 0) {
+                hasZero = true;
+                indexZero.add(i);
+                continue;
+            }
+            multiplyAll *= num;
+            countNonZero++;
+        }
+
+        hasNonZero = countNonZero >= indexZero.size();
+
+        for (int i = 0; i < n; i++) {
+            if (hasZero && indexZero.contains(i) && hasNonZero && indexZero.size() < 2) {
+                answer[i] = multiplyAll;
+            } else if (!hasZero) {
+                answer[i] = multiplyAll / nums[i];
+            }
+        }
+
+        return answer;
     }
 
     public static double averageWaitingTime(int[][] customers) {
