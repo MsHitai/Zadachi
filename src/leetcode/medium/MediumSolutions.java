@@ -6,19 +6,49 @@ import java.util.*;
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1, 2, 3, 4};
-        int[] nums6 = new int[]{2, 3, 0, 0};
-        int[] nums5 = new int[]{0, 4, 0};
-        int[] nums2 = new int[]{-1, 1, 0, -3, 3};
-        int[] nums3 = new int[]{1, 2, 3, 4, 5};
-        int[] nums4 = new int[]{5, 1, 2, 3, 4};
+        int num = 3749;
+        int num1 = 58;
 
-        System.out.println(Arrays.toString(productExceptSelf(nums5)));//[0,0,0]
-        System.out.println(Arrays.toString(productExceptSelf(nums6)));//[0,0,0]
-        System.out.println(Arrays.toString(productExceptSelf(nums2)));//[0,0,9,0,0]
-        System.out.println(Arrays.toString(productExceptSelf(nums)));//[24,12,8,6]
-        System.out.println(Arrays.toString(productExceptSelf(nums3)));//[120,60,40,30,24]
-        System.out.println(Arrays.toString(productExceptSelf(nums4)));//[24,120,60,40,30]
+        String x3749 = intToRoman(num);
+        String x58 = intToRoman(num1);
+
+        System.out.println(x3749);
+        System.out.println(x3749.equals("MMMDCCXLIX"));
+
+        System.out.println(x58);
+        System.out.println(x58.equals("LVIII"));
+    }
+
+
+    public static String intToRoman(int num) {
+        StringBuilder result = new StringBuilder();
+
+        HashMap<Integer, String> map = new LinkedHashMap<>();
+
+        map.put(1000, "M");
+        map.put(900, "CM");
+        map.put(500, "D");
+        map.put(400, "CD");
+        map.put(100, "C");
+        map.put(90, "XC");
+        map.put(50, "L");
+        map.put(40, "XL");
+        map.put(10, "X");
+        map.put(9, "IX");
+        map.put(5, "V");
+        map.put(4, "IV");
+        map.put(1, "I");
+
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            int key = entry.getKey();
+            String symbol = entry.getValue();
+            while (key <= num) {
+                result.append(symbol);
+                num -= key;
+            }
+        }
+
+        return result.toString();
     }
 
     /**
