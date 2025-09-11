@@ -6,19 +6,74 @@ import java.util.*;
 public class MediumSolutions {
 
     public static void main(String[] args) {
-        int num = 3749;
-        int num1 = 58;
-
-        String x3749 = intToRoman(num);
-        String x58 = intToRoman(num1);
-
-        System.out.println(x3749);
-        System.out.println(x3749.equals("MMMDCCXLIX"));
-
-        System.out.println(x58);
-        System.out.println(x58.equals("LVIII"));
+        String s1 = "PAYPALISHIRING";
+        System.out.println(convert("ABCD", 2));
+        System.out.println(convert(s1, 3));
+        System.out.println(convert(s1, 4));
+        System.out.println(convert(s1, s1.length()));
     }
 
+    public static String convert(String s, int numRows) {
+        if (s.length() <= numRows || numRows == 1) {
+            return s;
+        }
+        List<StringBuilder> sbs = new ArrayList<>(numRows);
+        for (int i = 0; i < numRows; i++) {
+            sbs.add(new StringBuilder());
+        }
+        int i = 0;
+        int j = 0;
+        boolean up = true;
+
+        while (i < s.length()) {
+            sbs.get(j).append(s.charAt(i));
+
+            if (up) {
+                j++;
+                if (j == numRows - 1) {
+                    up = false;
+                }
+            } else {
+                j--;
+                if (j == 0) {
+                    up = true;
+                }
+            }
+            i++;
+        }
+
+        return String.join("", sbs);
+    }
+
+    public String convertWithArray(String s, int numRows) {
+        if (numRows == 1 || s.length() <= numRows) {
+            return s;
+        }
+
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new StringBuilder();
+        }
+
+        int currentRow = 0;
+        int direction = 1;
+
+        for (char c : s.toCharArray()) {
+            rows[currentRow].append(c);
+            currentRow += direction;
+
+            if (currentRow == 0 || currentRow == numRows - 1) {
+                direction *= -1;
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder row : rows) {
+            result.append(row);
+        }
+
+        return result.toString();
+    }
 
     public static String intToRoman(int num) {
         StringBuilder result = new StringBuilder();
