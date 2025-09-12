@@ -13,6 +13,39 @@ public class MediumSolutions {
         System.out.println(convert(s1, s1.length()));
     }
 
+    public static String reverseWordsWithLibraryMethods(String s) {
+        List<String> words = new ArrayList<>(Arrays.stream(s.split(" "))
+                .filter(word -> !word.isBlank())
+                .toList());
+        StringBuilder sb = new StringBuilder();
+        for (int i = words.size() - 1; i >= 0; i--) {
+            sb.append(words.get(i)).append(" ");
+        }
+        return sb.toString().trim();
+    }
+
+    public static String reverseWords(String s) {
+        List<String> words = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) != ' ') {
+                sb.append(s.charAt(i));
+            } else {
+                if (!sb.isEmpty()) {
+                    words.add(sb.reverse().toString());
+                    sb = new StringBuilder();
+                }
+            }
+        }
+
+        if (!sb.isEmpty()) {
+            words.add(sb.reverse().toString());
+        }
+
+        return String.join(" ", words);
+    }
+
     public static String convert(String s, int numRows) {
         if (s.length() <= numRows || numRows == 1) {
             return s;
