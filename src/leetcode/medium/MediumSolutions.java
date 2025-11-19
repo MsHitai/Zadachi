@@ -108,6 +108,31 @@ public class MediumSolutions {
         return result.toString();
     }
 
+    public static void sortColors(int[] nums) {
+        int zeroCount = 0;
+        int oneCount = 0;
+        int twoCount = 0;
+        int j = 0;
+        for (int num : nums) {
+            if (num == 0) {
+                zeroCount++;
+            } else if (num == 1) {
+                oneCount++;
+            } else {
+                twoCount++;
+            }
+        }
+        for (int i = 0; i < zeroCount; i++) {
+            nums[j++] = 0;
+        }
+        for (int i = 0; i < oneCount; i++) {
+            nums[j++] = 1;
+        }
+        for (int i = 0; i < twoCount; i++) {
+            nums[j++] = 2;
+        }
+    }
+
     public static String intToRoman(int num) {
         StringBuilder result = new StringBuilder();
 
