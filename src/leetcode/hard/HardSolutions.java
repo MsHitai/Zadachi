@@ -24,41 +24,66 @@ public class HardSolutions {
      */
     public static List<String> fullJustify(String[] words, int maxWidth) {
         if (words.length < 2) {
-            return List.of(words[0]);
+            String word = words[0];
+            if (word.length() < maxWidth) {
+                word = word + " ".repeat(maxWidth - word.length());
+            }
+            return List.of(word);
         }
-        String whiteSpace = " ";
+
+        List<List<String>> lines = new ArrayList<>();
+        int start = 0;
+
+        while (start < words.length) {
+            int end = start + 1;
+            int lineLength = words[start].length();
+
+            while (end < words.length && lineLength + 1 + words[end].length() <= maxWidth) {
+                lineLength += 1 + words[end].length();
+                end++;
+            }
+
+            List<String> currentLine = new ArrayList<>(Arrays.asList(words).subList(start, end));
+            lines.add(currentLine);
+            start = end;
+        }
+
         List<String> result = new ArrayList<>();
-        //begin from the end, look if word plus next and space between is more than the maxWidth then add Whitespace until it's maxWidth
-        // for the first entry from the end no extra space between words, but all spaces go to the right
-        // for the rest distribute whitespaces accordingly
-        StringBuilder sb = new StringBuilder();
-        for (int i = words.length - 1; i >= 0; i--) {
-            if (i == words.length - 1) {
-                sb.append(words[i]);
-                int j = 1;
-                while (sb.length() < maxWidth) {
-                    if (i - j < 0) {
-                        break;
-                    }
-                    addWhiteSpace(words, maxWidth, sb, i, whiteSpace, j);
-                    j++;
-                }
-                result.add(sb.toString());
-                sb = new StringBuilder();
+        for (int i = 0; i < lines.size(); i++) {
+            if (i != lines.size() - 1) {
+                result.add(formatLine(lines.get(i), maxWidth, false));
+            } else {
+                result.add(formatLine(lines.get(i), maxWidth, true));
             }
         }
         return result;
     }
 
-    private static void addWhiteSpace(String[] words, int maxWidth, StringBuilder sb, int i, String whiteSpace, int j) {
-        if (sb.length() + 1 + words[i - j].length() > maxWidth) {
-            while (sb.length() < maxWidth) {
-                sb.append(whiteSpace);
-            }
+    private static String formatLine(List<String> words, int maxWidth, boolean isLastLine) {
+        if (isLastLine || words.size() == 1) {
+            // Левое выравнивание
+            String line = String.join(" ", words);
+            return line + " ".repeat(maxWidth - line.length());
         } else {
-            sb.append(whiteSpace).append(words[i - j]);
+            // Полное выравнивание
+            int sumOfWordLengths = words.stream().mapToInt(String::length).sum();
+            int totalSpaces = maxWidth - sumOfWordLengths;
+            int gaps = words.size() - 1;
+            int baseSpaces = totalSpaces / gaps;
+            int extraSpaces = totalSpaces % gaps;
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(words.getFirst());
+
+            for (int i = 1; i < words.size(); i++) {
+                int spacesToAdd = baseSpaces + (i <= extraSpaces ? 1 : 0);
+                sb.append(" ".repeat(spacesToAdd)).append(words.get(i));
+            }
+
+            return sb.toString();
         }
     }
+
 
     /**
      * Каждому ребенку 1 конфета, у кого рейтинг выше, чем у соседей - тому плюс 1
