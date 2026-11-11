@@ -159,37 +159,6 @@ public class EasySolutions {
         return digits;
     }
 
-    public static int[] plusOne(int[] digits) {
-        increase(digits);
-        return Arrays.stream(digits)
-                .mapToObj(String::valueOf)
-                .mapToInt(Integer::parseInt)
-                .toArray();
-    }
-
-    private static void increase(int[] digits) {
-        int result = digits[digits.length - 1];
-        if (result != 9 || digits.length == 1) {
-            int digit = digits[digits.length - 1];
-            digits[digits.length - 1] = digit + 1;
-            return;
-        }
-        for (int i = digits.length - 1; i >= 0; i--) {
-            if (digits[i] == 9 && i != 0) {
-                digits[i] = 0;
-                continue;
-            }
-            if (digits[i] != 9) {
-                digits[i] = digits[i] + 1;
-                break;
-            }
-            if (i == 0) {
-                int value = digits[i] == 9 ? 10 : digits[i] + 1;
-                digits[i] = value;
-            }
-        }
-    }
-
     public static int[] getConcatenation(int[] nums) {
         int[] result = new int[nums.length * 2];
         result = Arrays.copyOf(nums, result.length);

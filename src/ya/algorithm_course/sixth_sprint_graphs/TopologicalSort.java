@@ -26,11 +26,7 @@ public class TopologicalSort {
                     .stream()
                     .map(String::valueOf)
                     .collect(Collectors.joining(" ")));
-            TopologicalSort sort = new TopologicalSort();
-            System.out.println(sort.mainTopSort(nodes, pairs)
-                    .stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.joining(" ")));
+            // рекурсивный вариант того же алгоритма: new TopologicalSort().mainTopSort(nodes, pairs)
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }

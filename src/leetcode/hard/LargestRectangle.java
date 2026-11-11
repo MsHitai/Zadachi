@@ -1,8 +1,5 @@
 package leetcode.hard;
 
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
 
 public class LargestRectangle {
 
@@ -41,31 +38,6 @@ public class LargestRectangle {
             }
         }
 
-        return maxArea;
-    }
-
-// doesn't work on {2, 1, 2} todo find the error and improve:
-    public int largestRectangleArea(int[] heights) {
-        int[] copyHeights = Arrays.copyOf(heights, heights.length + 1);
-        copyHeights[copyHeights.length - 1] = 0;
-        int maxArea = 0;
-        int temp;
-        int height;
-        Deque<Integer> indexes = new LinkedList<>();
-        for (int i = 0; i < copyHeights.length; i++) {
-            height = copyHeights[i];
-            if (indexes.isEmpty() || height >= copyHeights[indexes.getLast()]) {
-                indexes.addLast(i);
-            } else if (height < copyHeights[indexes.getLast()]) {
-                while (!indexes.isEmpty() && height < copyHeights[indexes.getLast()]) {
-                    temp = copyHeights[indexes.getLast()] * (Math.abs(i - indexes.pollLast()));
-                    if (maxArea < temp) {
-                        maxArea = temp;
-                    }
-                }
-                indexes.addLast(i);
-            }
-        }
         return maxArea;
     }
 }

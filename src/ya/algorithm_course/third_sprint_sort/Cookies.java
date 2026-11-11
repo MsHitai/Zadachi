@@ -3,63 +3,48 @@ package ya.algorithm_course.third_sprint_sort;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ * Печеньки: сколько детей можно накормить, если ребёнку подходит печенька размера >= его жадности
+ * (LeetCode 455 "Assign Cookies").
+ * <p>
+ * Жадно: сортируем оба массива и двумя указателями отдаём самому нежадному ребёнку самую маленькую подходящую
+ * печеньку. O(n log n + m log m).
+ */
 public class Cookies {
 
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
-            int kids = Integer.parseInt(reader.readLine());
-            int[] greedinessPoint = new int[kids];
-            StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
-            for (int i = 0; i < kids; i++) {
-                greedinessPoint[i] = Integer.parseInt(tokenizer.nextToken());
-            }
-            int cookiesNumber = Integer.parseInt(reader.readLine());
-            Integer[] cookies = new Integer[cookiesNumber];
-            tokenizer = new StringTokenizer(reader.readLine());
-            for (int i = 0; i < cookiesNumber; i++) {
-                cookies[i] = Integer.parseInt(tokenizer.nextToken());
-            }
-            List<Integer> cookiesSorted = Arrays.stream(cookies).sorted().toList();
-            System.out.println(howManyKidsSatisfied(greedinessPoint, cookiesSorted));
+            int kids = Integer.parseInt(reader.readLine().trim());
+            int[] greed = readArray(reader.readLine(), kids);
+            int cookiesNumber = Integer.parseInt(reader.readLine().trim());
+            int[] cookies = readArray(reader.readLine(), cookiesNumber);
+            System.out.println(findContentChildren(greed, cookies));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    private static int howManyKidsSatisfied(int[] greeds, List<Integer> cookies) {
-        int count = 0;
-        List<Integer> copy = new ArrayList<>(cookies);
-
-        for (int greed : greeds) {
-            int index = hasCostInArray(copy, greed);
-            if (index != -1) {
-                copy.remove(index);
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-    private static int hasCostInArray(List<Integer> arr, int cost) {
-        int left = 0;
-        int right = arr.size() - 1;
-        int result = -1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (arr.get(mid) >= cost) {
-                result = mid;
-                right = mid - 1;
-            } else {
-                left = mid + 1;
-            }
+    private static int[] readArray(String line, int size) {
+        StringTokenizer tokenizer = new StringTokenizer(line);
+        int[] result = new int[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = Integer.parseInt(tokenizer.nextToken());
         }
         return result;
+    }
+
+    static int findContentChildren(int[] greed, int[] cookies) {
+        Arrays.sort(greed);
+        Arrays.sort(cookies);
+        int child = 0;
+        for (int cookie = 0; cookie < cookies.length && child < greed.length; cookie++) {
+            if (cookies[cookie] >= greed[child]) {
+                child++;
+            }
+        }
+        return child;
     }
 }

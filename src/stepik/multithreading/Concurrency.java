@@ -29,7 +29,8 @@ public class Concurrency {
 
         long before = System.currentTimeMillis();
         for (int i = 0; i < nums.length; i++) {
-            nums[i] = (float) (nums[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+            float f = (float) i;
+            nums[i] = (float) (nums[i] * Math.sin(0.2f + f / 5) * Math.cos(0.2f + f / 5) * Math.cos(0.4f + f / 2));
         }
 
         long after = System.currentTimeMillis();
@@ -54,8 +55,8 @@ public class Concurrency {
         });
 
         Thread thread2 = new Thread(() -> {
-            for (int i = 0; i < firstHalf.length; i++) {
-                float f = (float) i;
+            for (int i = 0; i < secondHalf.length; i++) {
+                float f = (float) (i + HALF); // индекс во всём массиве, иначе результат не совпадёт с однопоточным
                 secondHalf[i] = (float) (secondHalf[i] * Math.sin(0.2f + f / 5) * Math.cos(0.2f + f / 5) * Math.cos(0.4f + f / 2));
             }
         });

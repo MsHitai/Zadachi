@@ -21,41 +21,8 @@ public class CompareOneSymbolDifference {
         }
     }
 
-    private static boolean isEqual(String first, String second) {
-        if (first.equalsIgnoreCase(second)) {
-            return true;
-        }
-        StringBuilder sb1 = new StringBuilder(first);
-        StringBuilder sb2 = new StringBuilder(second);
-        int count = 0;
-        int size = Math.max(first.length(), second.length());
-        int left = 0;
-
-        while (left < size) {
-            if (left < first.length() && left < second.length()) {
-                if (first.charAt(left) == second.charAt(left)) {
-                    left++;
-                    continue;
-                } else {
-                    if (first.length() < second.length()) {
-                        sb1.insert(left, second.charAt(left));
-                    } else if (second.length() < first.length()) {
-                        sb2.insert(left, first.charAt(left));
-                    }
-                    count++;
-                    if (sb1.compareTo(sb2) == 0) {
-                        return true;
-                    }
-                }
-            }
-            left++;
-        }
-
-        return sb1.compareTo(sb2) == 0 || count == 1;
-    }
-
     public static boolean isOneEditDistance(String first, String second) {
-        if (first.equalsIgnoreCase(second)) {
+        if (first.equals(second)) {
             return true;
         }
         int firstLength = first.length();

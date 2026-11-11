@@ -4,116 +4,48 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.StringTokenizer;
 
+/**
+ * Клумбы: объединить пересекающиеся (и касающиеся) отрезки (LeetCode 56 "Merge Intervals").
+ * <p>
+ * Сортируем по началу; идём слева направо и либо расширяем текущий отрезок, либо начинаем новый.
+ * Время O(n log n), память O(n).
+ */
 public class IntervalsGarden {
 
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
-            int n = Integer.parseInt(reader.readLine());
-            Interval[] intervals = new Interval[n];
-            StringTokenizer tokenizer;
+            int n = Integer.parseInt(reader.readLine().trim());
+            int[][] intervals = new int[n][2];
             for (int i = 0; i < n; i++) {
-                tokenizer = new StringTokenizer(reader.readLine());
-                Interval interval = new Interval();
-                interval.start = Integer.parseInt(tokenizer.nextToken());
-                interval.end = Integer.parseInt(tokenizer.nextToken());
-                intervals[i] = interval;
+                StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
+                intervals[i][0] = Integer.parseInt(tokenizer.nextToken());
+                intervals[i][1] = Integer.parseInt(tokenizer.nextToken());
             }
-            findFreeSpaces(intervals).forEach(System.out::println);
+            StringBuilder sb = new StringBuilder();
+            for (int[] interval : merge(intervals)) {
+                sb.append(interval[0]).append(' ').append(interval[1]).append('\n');
+            }
+            System.out.print(sb);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    private static List<Interval> findFreeSpaces(Interval[] intervals) {
-        List<Interval> result = new ArrayList<>();
-        mergeSort(intervals, intervals.length);
-        Interval best = intervals[0];
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i].start < best.start && intervals[i].end < best.end) {
-                continue;
-            }
-            if (best.end < intervals[i].start) {
-                result.add(best);
-                best = intervals[i];
-            }
-            if (best.end < intervals[i].end && best.start < intervals[i].start) {
-                best.end = intervals[i].end;
-            }
-        }
-        result.add(best);
-        return result;
-    }
-
-    private static void mergeSort(Interval[] array, int arrayLength) {
-        if (arrayLength < 2) {
-            return;
-        }
-        int middle = array.length / 2;
-        Interval[] left = new Interval[middle];
-        Interval[] right = new Interval[arrayLength - middle];
-
-        System.arraycopy(array, 0, left, 0, middle);
-        if (arrayLength - middle >= 0) System.arraycopy(array, middle, right, 0, arrayLength - middle);
-        mergeSort(left, middle);
-        mergeSort(right, arrayLength - middle);
-
-        merge(array, left, right, middle, arrayLength - middle);
-    }
-
-    private static void merge(Interval[] array, Interval[] leftArray, Interval[] rightArray, int left, int right) {
-        int i = 0, j = 0, k = 0;
-        while (i < left && j < right) {
-            if (leftArray[i].start < rightArray[j].start) {
-                array[k++] = leftArray[i++];
-            } else if (leftArray[i].start == rightArray[j].start && (leftArray[i].end > rightArray[j].start || rightArray[j].end > leftArray[i].start)) {
-                Interval interval = leftArray[i];
-                interval.end = Math.max(interval.end, rightArray[j].end);
-                array[k++] = leftArray[i++];
+    static List<int[]> merge(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(interval -> interval[0]));
+        List<int[]> result = new ArrayList<>();
+        for (int[] interval : intervals) {
+            if (result.isEmpty() || result.getLast()[1] < interval[0]) {
+                result.add(new int[]{interval[0], interval[1]});
             } else {
-                array[k++] = rightArray[j++];
+                result.getLast()[1] = Math.max(result.getLast()[1], interval[1]);
             }
         }
-        while (i < left) {
-            array[k++] = leftArray[i++];
-        }
-        while (j < right) {
-            array[k++] = rightArray[j++];
-        }
-    }
-
-
-    static class Interval implements Comparable<Interval> {
-        int start;
-        int end;
-
-        public Interval() {
-        }
-
-        @Override
-        public String toString() {
-            return start + " " + end;
-        }
-
-        @Override
-        public int compareTo(Interval o) {
-            return Integer.compare(this.start, o.start);
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Interval interval = (Interval) o;
-            return start == interval.start && end == interval.end;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(start, end);
-        }
+        return result;
     }
 }

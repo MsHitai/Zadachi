@@ -25,21 +25,20 @@ public class SearchInsertPosition {
         log.info("{}", searchInsert(nums2, oneCase)); // expected result is 0
     }
 
+    /**
+     * Бинарный поиск первой позиции, где nums[i] >= target (lower bound). O(log n).
+     */
     public static int searchInsert(int[] nums, int target) {
-        if (nums[nums.length - 1] < target) {
-            return nums.length;
-        } else if (target < nums[0]) {
-            return 0;
-        }
-
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] < target && target < nums[i + 1] && i + 1 < nums.length) {
-                return i + 1;
-            }
-            if (nums[i] == target) {
-                return i;
+        int left = 0;
+        int right = nums.length; // ответ может быть равен длине массива
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
             }
         }
-        return 0;
+        return left;
     }
 }

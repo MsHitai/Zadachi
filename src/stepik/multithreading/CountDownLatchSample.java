@@ -51,8 +51,7 @@ public class CountDownLatchSample {
 
     public int getAndIncrement() {
         synchronized (monitor) {
-            value++;
+            return ++value; // читаем значение внутри блокировки, иначе вернём чужое увеличение
         }
-        return value;
     }
 }

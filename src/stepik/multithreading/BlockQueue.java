@@ -21,7 +21,8 @@ public class BlockQueue {
                 try {
                     monitor.wait(); // пока очередь пуста, поток спит и не тратит ресурсы компьютера
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt(); // восстанавливаем флаг прерывания
+                    return null;
                 }
             }
             return queue.poll();

@@ -4,7 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MultiThreadingGuessNumber {
-    private static boolean isGuessed = false;
+    // volatile обязателен: без него второй поток может никогда не увидеть изменение флага
+    private static volatile boolean isGuessed = false;
 
     public static void main(String[] args) {
 

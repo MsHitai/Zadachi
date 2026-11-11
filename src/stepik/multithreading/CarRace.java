@@ -81,12 +81,15 @@ public class CarRace {
 
     private static void tunnel(int index) {
         try {
-            tunnelSemaphore.acquire();
+            tunnelSemaphore.acquire(); // acquire до try: если прервут во время ожидания, release делать нельзя
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+        try {
             System.out.println(index + " started tunnel");
             sleepRandomTime();
             System.out.println(index + " finished tunnel");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } finally {
             tunnelSemaphore.release();
         }

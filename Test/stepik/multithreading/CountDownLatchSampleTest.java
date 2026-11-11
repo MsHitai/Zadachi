@@ -61,7 +61,7 @@ class CountDownLatchSampleTest {
         for (int i = 0; i < test; i++) {
             executorService.execute(() -> {
                 try {
-                    actual.getAndSet(downLatchSample.getAndIncrement());
+                    actual.accumulateAndGet(downLatchSample.getAndIncrement(), Math::max);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 } finally {

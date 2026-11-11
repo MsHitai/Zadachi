@@ -94,21 +94,22 @@ public class CustomHashTable {
         }
     }
 
-    private Integer safelyDeleteIfCollision(Integer key, CustomPair item, int index) {
-        CustomPair temp = item;
-        while (temp.next != null) {
-            if (Objects.equals(temp.key, key)) {
-                safelyDeleteIfKeyEquals(temp, index);
-                return temp.value;
+    /**
+     * Удаление из середины или конца цепочки: держим ссылку на предыдущий узел и "вырезаем" найденный,
+     * чтобы не потерять узлы, стоящие перед ним.
+     */
+    private Integer safelyDeleteIfCollision(Integer key, CustomPair head) {
+        CustomPair prev = head;
+        CustomPair current = head.next;
+        while (current != null) {
+            if (Objects.equals(current.key, key)) {
+                prev.next = current.next;
+                return current.value;
             }
-            temp = temp.next;
+            prev = current;
+            current = current.next;
         }
-        if (Objects.equals(temp.key, key)) {
-            safelyDeleteIfKeyEquals(temp, index);
-            return temp.value;
-        } else {
-            throw new IllegalArgumentException();
-        }
+        throw new IllegalArgumentException();
     }
 
     private void safelyDeleteIfKeyEquals(CustomPair item, int index) {
@@ -142,7 +143,7 @@ public class CustomHashTable {
             safelyDeleteIfKeyEquals(items[index], index);
             return value;
         } else {
-            return safelyDeleteIfCollision(key, items[index], index);
+            return safelyDeleteIfCollision(key, items[index]);
         }
     }
 

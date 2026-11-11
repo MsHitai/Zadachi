@@ -1,108 +1,68 @@
 package ya.algorithm_course.second_sprint_recursion;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
 
+/**
+ * Стек с операцией get_max за O(1) (аналог LeetCode 155 "Min Stack").
+ * <p>
+ * Рядом с основным стеком храним стек максимумов: на вершине всегда максимум среди текущих элементов.
+ * При push кладём max(item, текущий максимум), при pop снимаем с обоих стеков. Все операции O(1).
+ */
 public class StackMax {
 
-    private final List<Integer> items;
-    private final Deque<Integer> sorted;
+    private final Deque<Integer> items = new ArrayDeque<>();
+    private final Deque<Integer> maxes = new ArrayDeque<>();
 
-    public StackMax(int length) {
-        items = new ArrayList<>(length);
-        sorted = new LinkedList<>();
+    public void push(int item) {
+        items.push(item);
+        maxes.push(maxes.isEmpty() ? item : Math.max(item, maxes.peek()));
     }
 
-    public void push(Integer item) {
-        if (!sorted.isEmpty() && item >= sorted.getLast()) {
-            sorted.add(item);
-            items.add(item);
-            return;
-        }
-        items.add(item);
-        sorted.addFirst(item);
-    }
-
+    /**
+     * @return снятый элемент или null, если стек пуст
+     */
     public Integer pop() {
         if (items.isEmpty()) {
-            return Integer.MIN_VALUE;
-        } else if (Objects.equals(items.get(size() - 1), sorted.getLast())) {
-            sorted.removeLast();
-            return items.remove(items.size() - 1);
+            return null;
         }
-        Integer temp = items.remove(items.size() - 1);
-        sorted.remove(temp);
-        return temp;
+        maxes.pop();
+        return items.pop();
     }
 
     public Integer top() {
-        if (items.isEmpty()) {
-            return Integer.MIN_VALUE;
-        } else {
-            return items.get(items.size() - 1);
-        }
+        return items.peek();
     }
 
     public Integer getMax() {
-        if (items.isEmpty()) {
-            return Integer.MIN_VALUE;
-        } else {
-            return sorted.getLast();
-        }
+        return maxes.peek();
     }
 
-    public int size() {
-        return items.size();
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
-            int length = Integer.parseInt(reader.readLine());
-            String[] commands = new String[length];
+            int length = Integer.parseInt(reader.readLine().trim());
+            StackMax stack = new StackMax();
+            StringBuilder out = new StringBuilder();
             for (int i = 0; i < length; i++) {
-                commands[i] = reader.readLine();
+                String command = reader.readLine();
+                if (command.startsWith("get_max")) {
+                    Integer max = stack.getMax();
+                    out.append(max == null ? "None" : max).append('\n');
+                } else if (command.startsWith("push")) {
+                    stack.push(Integer.parseInt(command.split(" ")[1]));
+                } else if (command.startsWith("top")) {
+                    Integer top = stack.top();
+                    out.append(top == null ? "error" : top).append('\n');
+                } else if (stack.pop() == null) {
+                    out.append("error").append('\n');
+                }
             }
-            StackMax stackMax = new StackMax(length);
-            processCommands(commands, stackMax);
+            System.out.print(out);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void processCommands(String[] commands, StackMax stackMax) {
-        int temp;
-        for (String command : commands) {
-            if (command.startsWith("get_max")) {
-                temp = stackMax.getMax();
-                if (temp == Integer.MIN_VALUE) {
-                    System.out.println("None");
-                } else {
-                    System.out.println(temp);
-                }
-            } else if (command.startsWith("push")) {
-                String[] split = command.split(" ");
-                temp = Integer.parseInt(split[1]);
-                stackMax.push(temp);
-            } else if (command.startsWith("top")) {
-                temp = stackMax.top();
-                if (temp == Integer.MIN_VALUE) {
-                    System.out.println("error");
-                } else {
-                    System.out.println(temp);
-                }
-            } else {
-                temp = stackMax.pop();
-                if (temp == Integer.MIN_VALUE) {
-                    System.out.println("error");
-                }
-            }
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

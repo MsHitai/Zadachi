@@ -1,45 +1,43 @@
 package leetcode.challenges;
 
 /**
- * Find minimum distance between X and Y in a String, that consists of only X, O, Y
+ * Find minimum distance between X and Y in a String, that consists of only X, O, Y.
+ * If there is no X or no Y, return 0.
+ * <p>
+ * Один проход: запоминаем последнюю позицию X и Y (изначально -1 — "ещё не встречали").
+ * Время O(n), память O(1). Тот же приём, что в LeetCode 243 "Shortest Word Distance".
  */
 public class MinDistanceForXAndY {
-    private static final String FIRST = "XY"; // must return 1
-    private static final String SECOND = "YOX"; // must return 2
-    private static final String THIRD = "OO"; // must return 0
-    private static final String FOURTH = "OYX"; // must return 1
-    private static final String FIFTH = "XOOOYOOOXOOXOOYYOOOX"; // must return 3
-    private static final String SIXTH = "OOXOOYOXO"; // must return 2
 
     public static void main(String[] args) {
-        System.out.println(calculateDistance(FIRST));
-        System.out.println(calculateDistance(SECOND));
-        System.out.println(calculateDistance(THIRD));
-        System.out.println(calculateDistance(FOURTH));
-        System.out.println(calculateDistance(FIFTH));
-        System.out.println(calculateDistance(SIXTH));
+        System.out.println(calculateDistance("XY") == 1);
+        System.out.println(calculateDistance("YOX") == 2);
+        System.out.println(calculateDistance("OO") == 0);
+        System.out.println(calculateDistance("OYX") == 1);
+        System.out.println(calculateDistance("XOOOYOOOXOOXOOYYOOOX") == 3);
+        System.out.println(calculateDistance("OOXOOYOXO") == 2);
+        System.out.println(calculateDistance("OXOOOOY") == 5);
     }
 
-    private static int calculateDistance(String s) {
-        if (!s.contains("X") || !s.contains("Y")) {
-            return 0;
-        }
-
-        int indexX = 0;
-        int indexY = 0;
-        int minDistance = s.length();
+    static int calculateDistance(String s) {
+        int lastX = -1;
+        int lastY = -1;
+        int best = Integer.MAX_VALUE;
 
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == 'X') {
-                indexX = i;
-            } else if (s.charAt(i) == 'Y') {
-                indexY = i;
+            char c = s.charAt(i);
+            if (c == 'X') {
+                lastX = i;
+            } else if (c == 'Y') {
+                lastY = i;
+            } else {
+                continue;
             }
-            if (Math.abs(indexX - indexY) != 0 && Math.abs(indexX - indexY) < minDistance) {
-                minDistance = Math.abs(indexX - indexY);
+            if (lastX != -1 && lastY != -1) {
+                best = Math.min(best, Math.abs(lastX - lastY));
             }
         }
 
-        return minDistance;
+        return best == Integer.MAX_VALUE ? 0 : best;
     }
 }

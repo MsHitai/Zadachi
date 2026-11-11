@@ -190,37 +190,18 @@ public class MediumSolutions {
      * the elements of nums except nums[i].
      */
     public static int[] productExceptSelf(int[] nums) {
+        // Без деления: answer[i] = (произведение слева от i) * (произведение справа от i). O(n) время, O(1) доп. памяти
         int n = nums.length;
         int[] answer = new int[n];
-        if (Arrays.equals(nums, answer)) {
-            return answer;
+        answer[0] = 1;
+        for (int i = 1; i < n; i++) {
+            answer[i] = answer[i - 1] * nums[i - 1];
         }
-        int multiplyAll = 1;
-        boolean hasZero = false;
-        boolean hasNonZero;
-        int countNonZero = 0;
-        Set<Integer> indexZero = new HashSet<>();
-        for (int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            if (num == 0) {
-                hasZero = true;
-                indexZero.add(i);
-                continue;
-            }
-            multiplyAll *= num;
-            countNonZero++;
+        int suffix = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            answer[i] *= suffix;
+            suffix *= nums[i];
         }
-
-        hasNonZero = countNonZero >= indexZero.size();
-
-        for (int i = 0; i < n; i++) {
-            if (hasZero && indexZero.contains(i) && hasNonZero && indexZero.size() < 2) {
-                answer[i] = multiplyAll;
-            } else if (!hasZero) {
-                answer[i] = multiplyAll / nums[i];
-            }
-        }
-
         return answer;
     }
 

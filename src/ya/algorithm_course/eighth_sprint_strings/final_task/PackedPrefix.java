@@ -79,12 +79,14 @@ public class PackedPrefix {
             for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
                 if (Character.isDigit(c)) {
-                    if (!Character.isDigit(word.charAt(i + 1))) {
-                        multipliers.push(Integer.parseInt(String.valueOf(c)));
-                    } else {
-                        String multiplier = String.valueOf(word.charAt(i) + word.charAt(i + 1));
-                        multipliers.push(Integer.parseInt(multiplier));
+                    // множитель может быть многозначным (как в LeetCode 394 Decode String)
+                    int multiplier = 0;
+                    while (Character.isDigit(word.charAt(i))) {
+                        multiplier = multiplier * 10 + (word.charAt(i) - '0');
+                        i++;
                     }
+                    i--; // сейчас i на '[', цикл for сам сдвинет индекс
+                    multipliers.push(multiplier);
                 } else if (c == '[') {
                     characters.push(new Element(sb, multipliers.pop()));
                     sb = new StringBuilder();

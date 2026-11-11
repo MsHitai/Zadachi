@@ -1,5 +1,9 @@
 package stepik.multithreading;
 
+/**
+ * Демонстрация deadlock: два потока захватывают два монитора в противоположном порядке и ждут друг друга вечно.
+ * Исправление — единый порядок захвата блокировок, см. {@link #transferSafely(boolean, int)}.
+ */
 public class DeadLockAccount {
 
     private int amount1;
@@ -57,6 +61,27 @@ public class DeadLockAccount {
                 }
             } else {
                 System.out.println("There is not enough money");
+            }
+        }
+    }
+
+    /**
+     * Как избежать deadlock: все потоки берут мониторы в одном и том же порядке (сначала monitor1, потом monitor2).
+     * Тогда циклического ожидания не возникает. Методы выше специально берут их в разном порядке, чтобы показать
+     * взаимную блокировку.
+     */
+    public void transferSafely(boolean from1To2, int amount) {
+        synchronized (monitor1) {
+            synchronized (monitor2) {
+                if (from1To2 && amount <= amount1) {
+                    amount1 -= amount;
+                    amount2 += amount;
+                } else if (!from1To2 && amount <= amount2) {
+                    amount2 -= amount;
+                    amount1 += amount;
+                } else {
+                    System.out.println("There is not enough money");
+                }
             }
         }
     }

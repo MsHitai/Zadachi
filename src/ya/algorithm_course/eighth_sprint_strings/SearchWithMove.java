@@ -8,28 +8,24 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
+/**
+ * Поиск со сдвигом: найти все позиции i (с 1), где x[i + k] - p[k] одинаково для всех k,
+ * т.е. шаблон p встречается в x с точностью до прибавления константы.
+ * <p>
+ * Сравниваем разности соседних элементов: x[i+k] - x[i+k-1] == p[k] - p[k-1].
+ * Шаблон длины 1 подходит в любой позиции. Время O(n * m), память O(m).
+ * (Можно O(n + m): построить массивы разностей и искать один в другом через КМП / Z-функцию.)
+ */
 public class SearchWithMove {
 
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+            int n = Integer.parseInt(reader.readLine().trim());
+            int[] nums = readArray(reader.readLine(), n);
+            int m = Integer.parseInt(reader.readLine().trim());
+            int[] pattern = readArray(reader.readLine(), m);
 
-            int n = Integer.parseInt(reader.readLine());
-            List<Integer> temperatures = new ArrayList<>();
-            StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
-
-            for (int i = 0; i < n; i++) {
-                temperatures.add(Integer.parseInt(tokenizer.nextToken()));
-            }
-
-            int step = Integer.parseInt(reader.readLine());
-            List<Integer> template = new ArrayList<>();
-            tokenizer = new StringTokenizer(reader.readLine());
-
-            for (int i = 0; i < step; i++) {
-                template.add(Integer.parseInt(tokenizer.nextToken()));
-            }
-
-            System.out.println(findPositions(temperatures, template, step).stream()
+            System.out.println(findPositions(nums, pattern).stream()
                     .map(String::valueOf)
                     .collect(Collectors.joining(" ")));
         } catch (IOException e) {
@@ -37,33 +33,30 @@ public class SearchWithMove {
         }
     }
 
-    private static List<Integer> findPositions(List<Integer> nums, List<Integer> template, int step) {
-        List<Integer> result = new ArrayList<>();
-        int[] diffs = new int[step - 1];
-        boolean check = false;
-        int j = 0;
-
-        for (int i = 0; i < template.size() - 1; i++) {
-            diffs[i] = template.get(i + 1) - template.get(i);
+    private static int[] readArray(String line, int size) {
+        StringTokenizer tokenizer = new StringTokenizer(line);
+        int[] result = new int[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = Integer.parseInt(tokenizer.nextToken());
         }
-
-        for (int i = 0; i < nums.size() - 1; i++) {
-            for (int k = 1; k < step; k++) {
-                if (i + k < nums.size() && nums.get(i + k) - nums.get(i + j++) == diffs[k - 1]) {
-                    check = true;
-                } else {
-                    check = false;
-                    break;
-                }
-            }
-            if (check) {
-                result.add(i + 1);
-                check = false;
-            }
-            j = 0;
-        }
-
         return result;
     }
 
+    static List<Integer> findPositions(int[] nums, int[] pattern) {
+        List<Integer> result = new ArrayList<>();
+        int m = pattern.length;
+        for (int i = 0; i + m <= nums.length; i++) {
+            boolean matches = true;
+            for (int k = 1; k < m; k++) {
+                if (nums[i + k] - nums[i + k - 1] != pattern[k] - pattern[k - 1]) {
+                    matches = false;
+                    break;
+                }
+            }
+            if (matches) {
+                result.add(i + 1);
+            }
+        }
+        return result;
+    }
 }

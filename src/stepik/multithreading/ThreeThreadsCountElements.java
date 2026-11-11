@@ -13,11 +13,11 @@ public class ThreeThreadsCountElements {
 
     public static void main(String[] args) {
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor(); // Executors.newFixedThreadPool(3);
+        ExecutorService executorService = Executors.newFixedThreadPool(3); // single-thread executor выполнил бы задачи по очереди
 
         CountDownLatch countDownLatch = new CountDownLatch(3);
 
-        Thread thread1 = new Thread(() -> {
+        Runnable thread1 = () -> {
             long sum = 0;
             for (int i = 0; i < LIM; i++) {
                 if (i % 2 == 0) {
@@ -27,9 +27,9 @@ public class ThreeThreadsCountElements {
 
             System.out.println("Сумма всех четных чисел = " + sum);
             countDownLatch.countDown();
-        });
+        };
 
-        Thread thread2 = new Thread(() -> {
+        Runnable thread2 = () -> {
             long sum = 0;
             for (int i = 0; i < LIM; i++) {
                 if (i % 7 == 0) {
@@ -39,12 +39,12 @@ public class ThreeThreadsCountElements {
 
             System.out.println("Сумма всех чисел, которые делятся на 7 без остатка = " + sum);
             countDownLatch.countDown();
-        });
+        };
 
         List<Integer> randomNums = new ArrayList<>();
         Random random = new Random();
 
-        Thread thread3 = new Thread(() -> {
+        Runnable thread3 = () -> {
 
             for (int i = 0; i < 1000; i++) {
                 randomNums.add(random.nextInt(1000));
@@ -57,7 +57,7 @@ public class ThreeThreadsCountElements {
             }
             System.out.println("Количество четных чисел в коллекции случайных цифр = " + quantity);
             countDownLatch.countDown();
-        });
+        };
 
         long before = System.currentTimeMillis();
 

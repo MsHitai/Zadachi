@@ -6,7 +6,7 @@ import java.util.Queue;
 public class LampsTree {
 
     public static int treeSolution(Node head) {
-        int count = -1;
+        int count = Integer.MIN_VALUE; // значения могут быть отрицательными
         Queue<Node> queue = new ArrayDeque<>();
         if (head != null) {
             queue.add(head);
