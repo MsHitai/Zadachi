@@ -75,6 +75,7 @@
 | Insert GCD in Linked List | [2807](https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list/) M | [MediumSolutions#insertGCD](src/leetcode/medium/MediumSolutions.java) | |
 | Design Circular Deque | ≈[641](https://leetcode.com/problems/design-circular-deque/) M | [CustomDeque](src/ya/algorithm_course/second_sprint_recursion/CustomDeque.java) | кольцевой буфер, `(i − 1 + n) % n` |
 | Design Circular Queue | ≈[622](https://leetcode.com/problems/design-circular-queue/) M | [RestrictedQueue](src/ya/algorithm_course/second_sprint_recursion/RestrictedQueue.java) | |
+| Insert Delete GetRandom O(1) | [380](https://leetcode.com/problems/insert-delete-getrandom-o1/) M | [RandomizedSet](src/leetcode/medium/RandomizedSet.java) | **заменено на эталон** (старая версия теряла элементы при коллизиях и зависала на пустом `getRandom`): список + `Map` значение→индекс; при удалении переносим последний элемент в дыру |
 
 ## 7. Деревья и кучи
 
@@ -142,7 +143,7 @@
 | Quick Sort (3-way partition) | ≈[912](https://leetcode.com/problems/sort-an-array/) M, [75](https://leetcode.com/problems/sort-colors/) M | [QuickSortAlgorithms](src/stepik/algorithms/QuickSortAlgorithms.java) | **заменено на эталон**: на одинаковых элементах O(n), глубина рекурсии O(log n) |
 | In-place quicksort с компаратором | ≈[912](https://leetcode.com/problems/sort-an-array/) M | [EffectiveQuicksort](src/ya/algorithm_course/third_sprint_sort/final_test/EffectiveQuicksort.java) | Ломуто со случайным опорным элементом |
 | Merge Sort | ≈[912](https://leetcode.com/problems/sort-an-array/) M | [MakeMergeSort](src/ya/algorithm_course/third_sprint_sort/MakeMergeSort.java) | |
-| Sort Colors (counting sort) | ≈[75](https://leetcode.com/problems/sort-colors/) M | [ColorCountingSort](src/ya/algorithm_course/third_sprint_sort/ColorCountingSort.java) | на собесе ждут one-pass «голландский флаг» |
+| Sort Colors | [75](https://leetcode.com/problems/sort-colors/) M | [MediumSolutions#sortColors](src/leetcode/medium/MediumSolutions.java), [ColorCountingSort](src/ya/algorithm_course/third_sprint_sort/ColorCountingSort.java) | **заменено на эталон** (вопрос с собеседования в Google): one-pass «голландский флаг» `low/mid/high`; подсчёт — два прохода |
 | Largest Number | ≈[179](https://leetcode.com/problems/largest-number/) M | [BigNumber](src/ya/algorithm_course/third_sprint_sort/BigNumber.java) | компаратор `a+b` против `b+a` |
 
 ## 13. Строки
@@ -155,6 +156,7 @@
 | Roman ↔ Integer | [13](https://leetcode.com/problems/roman-to-integer/) E, [12](https://leetcode.com/problems/integer-to-roman/) M | [RomanToInteger](src/leetcode/challenges/RomanToInteger.java), [MediumSolutions#intToRoman](src/leetcode/medium/MediumSolutions.java) | |
 | One Edit Distance | ≈[161](https://leetcode.com/problems/one-edit-distance/) M | [CompareOneSymbolDifference](src/ya/algorithm_course/eighth_sprint_strings/CompareOneSymbolDifference.java) | **исправлено** сравнение без учёта регистра; при первом расхождении сравниваем хвосты |
 | Поиск шаблона со сдвигом | ≈[28](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/) E | [SearchWithMove](src/ya/algorithm_course/eighth_sprint_strings/SearchWithMove.java) | **исправлено** для шаблона длины 1; сравниваем массивы разностей (можно через КМП) |
+| Text Justification | [68](https://leetcode.com/problems/text-justification/) H | [BestTextJustify](src/leetcode/hard/BestTextJustify.java), [HardSolutions#fullJustify](src/leetcode/hard/HardSolutions.java) | жадно набираем слова в строку; лишние пробелы раздаём слева направо (`extra / gaps`, остаток — первым промежуткам); последняя строка и строка из одного слова — по левому краю |
 
 ## 14. Математика
 
@@ -216,5 +218,5 @@
 - **Решения с неизвестным условием** — исправить их нельзя, пока не найдено условие: [tinkoff/BankRobbery](src/tinkoff/BankRobbery.java) (жадность вместо перебора подмножеств), [tinkoff/Cards](src/tinkoff/Cards.java) (выход за границу массива при `i = 0`), [algo_training/Main](src/ya/algo_training/Main.java).
 - **Исправлено, но слишком простое для FAANG:** [tinkoff/Sheriff](src/tinkoff/Sheriff.java) (≈ LC 1189), [MinDistanceForXAndY](src/leetcode/challenges/MinDistanceForXAndY.java) (≈ LC 243), [LampsTree](src/ya/algorithm_course/fifth_sprint_trees/LampsTree.java).
 - **Простые задачи на ввод-вывод и разминку:** спринты 1–2 Практикума (матрицы, двоичные числа, очереди без нюансов), лёгкие LC (1431, 2769, 3110, 1929, 58, 28, 344, 118).
-- **Не алгоритмы:** `stepik/training`, `stepik/files`, `ya/java_course`, `beans`, `test/assignments`, `yandex_cup`, `ReadWrite`, `ManyFunctionalTool`, `DownloadFilesImitator`.
+- **Не алгоритмы:** `stepik/training`, `stepik/files`, `ya/java_course`, `beans`, `test/assignments`, `yandex_cup`, `ReadWrite`, `ManyFunctionalTool`, `DownloadFilesImitator`, `cards/QuestionAndAnswer`.
 - **Учебные эксперименты Stepik:** `HanoiTower`, `Huffman`, `KnapsackProblem` (ввод захардкожен), `DifferentSummands`, `RocksGame`, `PolynominalHash` (случайный перебор коллизий).

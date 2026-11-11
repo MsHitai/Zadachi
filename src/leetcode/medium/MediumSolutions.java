@@ -108,29 +108,30 @@ public class MediumSolutions {
         return result.toString();
     }
 
+    /**
+     * LeetCode 75 "Sort Colors" за один проход (задача Дейкстры о голландском флаге), O(1) памяти.
+     * Инвариант: [0, low) — нули, [low, mid) — единицы, (high, n-1] — двойки, [mid, high] — ещё не просмотрено.
+     * После обмена с high индекс mid не сдвигаем: пришедший оттуда элемент ещё не проверен.
+     */
     public static void sortColors(int[] nums) {
-        int zeroCount = 0;
-        int oneCount = 0;
-        int twoCount = 0;
-        int j = 0;
-        for (int num : nums) {
-            if (num == 0) {
-                zeroCount++;
-            } else if (num == 1) {
-                oneCount++;
+        int low = 0;
+        int mid = 0;
+        int high = nums.length - 1;
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                swap(nums, low++, mid++);
+            } else if (nums[mid] == 2) {
+                swap(nums, mid, high--);
             } else {
-                twoCount++;
+                mid++;
             }
         }
-        for (int i = 0; i < zeroCount; i++) {
-            nums[j++] = 0;
-        }
-        for (int i = 0; i < oneCount; i++) {
-            nums[j++] = 1;
-        }
-        for (int i = 0; i < twoCount; i++) {
-            nums[j++] = 2;
-        }
+    }
+
+    private static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 
     public static String intToRoman(int num) {

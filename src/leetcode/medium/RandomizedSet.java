@@ -1,63 +1,51 @@
 package leetcode.medium;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+/**
+ * LeetCode 380 "Insert Delete GetRandom O(1)".
+ * <p>
+ * Список значений даёт getRandom за O(1) (случайный индекс), а мапа "значение -> индекс в списке" даёт
+ * insert и remove за O(1). Чтобы удалять из списка за O(1), удаляемый элемент меняем местами с последним
+ * и удаляем хвост.
+ * <p>
+ * Почему не подошла первая версия (массив с индексом по хешу): разные значения с одинаковым индексом
+ * (например 0 и 16 при длине 16) затирали друг друга, после расширения массива элементы оставались на старых
+ * индексах и переставали находиться, а getRandom перебирал пустые ячейки и на пустом наборе зависал.
+ */
 public class RandomizedSet {
 
-    private Integer[] set;
-    private final Random random;
-    private int actualSize;
-
-    public RandomizedSet() {
-        this.actualSize = 0;
-        this.set = new Integer[16];
-        random = new Random();
-    }
+    private final List<Integer> values = new ArrayList<>();
+    private final Map<Integer, Integer> indexByValue = new HashMap<>();
+    private final Random random = new Random();
 
     public boolean insert(int val) {
-        if (this.set.length == this.actualSize) {
-            this.set = Arrays.copyOf(this.set, actualSize * 2);
-        }
-        int index = getIndex(val);
-        if (set[index] != null) {
+        if (indexByValue.containsKey(val)) {
             return false;
         }
-        set[index] = val;
-        this.actualSize++;
+        indexByValue.put(val, values.size());
+        values.add(val);
         return true;
     }
 
     public boolean remove(int val) {
-        int index = getIndex(val);
-        if (set[index] == null) {
+        Integer index = indexByValue.remove(val);
+        if (index == null) {
             return false;
         }
-        set[index] = null;
-        this.actualSize--;
+        int last = values.removeLast();
+        if (index < values.size()) { // удаляли не последний: переносим последний на освободившееся место
+            values.set(index, last);
+            indexByValue.put(last, index);
+        }
         return true;
     }
 
     public int getRandom() {
-        int index = random.nextInt(0, set.length);
-        while (set[index] == null) {
-            index = random.nextInt(0, set.length);
-            if (set[index] != null) {
-                return set[index];
-            }
-        }
-        return set[index];
-    }
-
-    private long getHash(int value) {
-        if (value == 0) {
-            return 0;
-        }
-        return Math.abs(17L * value);
-    }
-
-    private int getIndex(int key) {
-        long hash = getHash(key);
-        return (int) (hash % this.set.length);
+        return values.get(random.nextInt(values.size()));
     }
 }
